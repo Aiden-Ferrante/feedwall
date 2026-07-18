@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>feedwall — starter pack</title>
+  </head>
+  <body>
+    <outline text="Papers" title="Papers">
+      <outline type="rss" text="arXiv cs.LG (Machine Learning)" title="arXiv cs.LG" xmlUrl="http://export.arxiv.org/rss/cs.LG" htmlUrl="https://arxiv.org/list/cs.LG/recent"/>
+      <outline type="rss" text="arXiv cs.AI (Artificial Intelligence)" title="arXiv cs.AI" xmlUrl="http://export.arxiv.org/rss/cs.AI" htmlUrl="https://arxiv.org/list/cs.AI/recent"/>
+      <outline type="rss" text="arXiv cs.CL (Computation &amp; Language / LLMs)" title="arXiv cs.CL" xmlUrl="http://export.arxiv.org/rss/cs.CL" htmlUrl="https://arxiv.org/list/cs.CL/recent"/>
+      <outline type="rss" text="arXiv stat.ML (Statistics — ML)" title="arXiv stat.ML" xmlUrl="http://export.arxiv.org/rss/stat.ML" htmlUrl="https://arxiv.org/list/stat.ML/recent"/>
+      <outline type="rss" text="arXiv econ.EM (Econometrics / causal)" title="arXiv econ.EM" xmlUrl="http://export.arxiv.org/rss/econ.EM" htmlUrl="https://arxiv.org/list/econ.EM/recent"/>
+    </outline>
+    <outline text="AI/ML — Blogs &amp; Newsletters" title="AI/ML — Blogs &amp; Newsletters">
+      <outline type="rss" text="Hugging Face — Blog" title="Hugging Face Blog" xmlUrl="https://huggingface.co/blog/feed.xml" htmlUrl="https://huggingface.co/blog"/>
+      <outline type="rss" text="Berkeley AI Research (BAIR)" title="BAIR Blog" xmlUrl="https://bair.berkeley.edu/blog/feed.xml" htmlUrl="https://bair.berkeley.edu/blog/"/>
+      <outline type="rss" text="Simon Willison" title="Simon Willison" xmlUrl="https://simonwillison.net/atom/everything/" htmlUrl="https://simonwillison.net/"/>
+      <outline type="rss" text="Lil'Log (Lilian Weng)" title="Lil'Log" xmlUrl="https://lilianweng.github.io/index.xml" htmlUrl="https://lilianweng.github.io/"/>
+      <outline type="rss" text="Ahead of AI (Sebastian Raschka)" title="Ahead of AI" xmlUrl="https://magazine.sebastianraschka.com/feed" htmlUrl="https://magazine.sebastianraschka.com/"/>
+      <outline type="rss" text="The Gradient" title="The Gradient" xmlUrl="https://thegradient.pub/rss/" htmlUrl="https://thegradient.pub/"/>
+      <outline type="rss" text="Import AI (Jack Clark)" title="Import AI" xmlUrl="https://importai.substack.com/feed" htmlUrl="https://importai.substack.com/"/>
+    </outline>
+    <outline text="Stats &amp; Causal" title="Stats &amp; Causal">
+      <outline type="rss" text="Statistical Modeling (Andrew Gelman)" title="Gelman — Statistical Modeling" xmlUrl="https://statmodeling.stat.columbia.edu/feed/" htmlUrl="https://statmodeling.stat.columbia.edu/"/>
+    </outline>
+    <outline text="Code &amp; Launches" title="Code &amp; Launches">
+      <outline type="rss" text="Hacker News — Front Page" title="HN Front Page" xmlUrl="https://hnrss.org/frontpage" htmlUrl="https://news.ycombinator.com/"/>
+      <outline type="rss" text="Hacker News — 150+ points" title="HN 150+ points" xmlUrl="https://hnrss.org/newest?points=150" htmlUrl="https://news.ycombinator.com/"/>
+      <outline type="rss" text="GitHub Trending — Python (daily)" title="GitHub Trending Python" xmlUrl="https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml" htmlUrl="https://github.com/trending/python?since=daily"/>
+      <outline type="rss" text="GitHub Trending — All (daily)" title="GitHub Trending All" xmlUrl="https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml" htmlUrl="https://github.com/trending?since=daily"/>
+    </outline>
+    <outline text="Markets &amp; Econ" title="Markets &amp; Econ">
+      <outline type="rss" text="MarketWatch — Top Stories" title="MarketWatch Top Stories" xmlUrl="https://feeds.content.dowjones.io/public/rss/mw_topstories" htmlUrl="https://www.marketwatch.com/"/>
+      <outline type="rss" text="Investing.com — News" title="Investing.com News" xmlUrl="https://www.investing.com/rss/news.rss" htmlUrl="https://www.investing.com/news/"/>
+      <outline type="rss" text="Federal Reserve — Press Releases" title="Fed Press Releases" xmlUrl="https://www.federalreserve.gov/feeds/press_all.xml" htmlUrl="https://www.federalreserve.gov/newsevents.htm"/>
+      <outline type="rss" text="Marginal Revolution (econ)" title="Marginal Revolution" xmlUrl="https://marginalrevolution.com/feed" htmlUrl="https://marginalrevolution.com/"/>
+    </outline>
+    <outline text="Tech News" title="Tech News">
+      <outline type="rss" text="Ars Technica" title="Ars Technica" xmlUrl="https://feeds.arstechnica.com/arstechnica/index" htmlUrl="https://arstechnica.com/"/>
+      <outline type="rss" text="The Verge" title="The Verge" xmlUrl="https://www.theverge.com/rss/index.xml" htmlUrl="https://www.theverge.com/"/>
+      <outline type="rss" text="TechCrunch" title="TechCrunch" xmlUrl="https://techcrunch.com/feed/" htmlUrl="https://techcrunch.com/"/>
+    </outline>
+  </body>
+</opml>

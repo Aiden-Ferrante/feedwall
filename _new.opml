@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>feedwall — new feeds</title>
+  </head>
+  <body>
+    <outline text="Discovered — macro &amp; econ data" title="Discovered — macro &amp; econ data">
+      <outline type="rss" text="CBO — Publications" title="CBO Publications" xmlUrl="https://www.cbo.gov/publications/all/rss.xml" htmlUrl="https://www.cbo.gov/publications/all"/>
+    </outline>
+    <outline text="Discovered — econ analysis &amp; commentary" title="Discovered — econ analysis &amp; commentary">
+      <outline type="rss" text="Brad DeLong" title="Brad DeLong" xmlUrl="https://braddelong.substack.com/feed" htmlUrl="https://braddelong.substack.com/"/>
+      <outline type="rss" text="EconLog" title="EconLog" xmlUrl="https://www.econlib.org/feed/" htmlUrl="https://www.econlib.org/econlog/"/>
+    </outline>
+    <outline text="Discovered — local-LLM practitioners &amp; guides" title="Discovered — local-LLM practitioners &amp; guides">
+      <outline type="rss" text="Maxime Labonne" title="Maxime Labonne" xmlUrl="https://maximelabonne.substack.com/feed" htmlUrl="https://maximelabonne.substack.com/"/>
+    </outline>
+    <outline text="Discovered — builders in public" title="Discovered — builders in public">
+      <outline type="rss" text="Supabase — Blog" title="Supabase Blog" xmlUrl="https://supabase.com/rss.xml" htmlUrl="https://supabase.com/blog"/>
+      <outline type="rss" text="Zed — Blog" title="Zed Blog" xmlUrl="https://zed.dev/blog.rss" htmlUrl="https://zed.dev/blog"/>
+      <outline type="rss" text="Startups for the Rest of Us (Rob Walling)" title="Startups for the Rest of Us" xmlUrl="https://www.startupsfortherestofus.com/feed" htmlUrl="https://www.startupsfortherestofus.com/"/>
+    </outline>
+  </body>
+</opml>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0"><head><title>feedwall papers lane — niche arXiv query feeds</title></head><body>
+<outline text="Papers">
+  <outline type="rss" text="arXiv query — efficient LLM inference/serving" xmlUrl="https://export.arxiv.org/api/query?search_query=%28cat%3Acs.LG+OR+cat%3Acs.CL+OR+cat%3Acs.DC+OR+cat%3Acs.AR+OR+cat%3Acs.PF+OR+cat%3Acs.OS%29+AND+%28all%3A%22LLM+inference%22+OR+all%3A%22inference+serving%22+OR+all%3A%22KV+cache%22+OR+all%3A%22speculative+decoding%22+OR+all%3A%22post-training+quantization%22+OR+all%3A%22weight-only+quantization%22+OR+all%3A%22model+serving%22+OR+all%3A%22attention+kernel%22+OR+all%3A%22inference+latency%22+OR+all%3A%22MoE+inference%22%29&amp;sortBy=submittedDate&amp;sortOrder=descending&amp;max_results=40"/>
+  <outline type="rss" text="arXiv query — agents, harnesses &amp; evals" xmlUrl="https://export.arxiv.org/api/query?search_query=%28cat%3Acs.AI+OR+cat%3Acs.CL+OR+cat%3Acs.LG+OR+cat%3Acs.SE+OR+cat%3Acs.MA%29+AND+%28all%3A%22coding+agent%22+OR+all%3A%22agentic+coding%22+OR+all%3A%22agent+evaluation%22+OR+all%3A%22agent+benchmark%22+OR+all%3A%22SWE-bench%22+OR+all%3A%22agent+reliability%22+OR+all%3A%22agent+harness%22+OR+all%3A%22computer-use+agent%22+OR+all%3A%22context+engineering%22+OR+all%3A%22agent+framework%22+OR+all%3A%22long-horizon+agent%22%29&amp;sortBy=submittedDate&amp;sortOrder=descending&amp;max_results=40"/>
+  <outline type="rss" text="arXiv query — econophysics &amp; quant markets" xmlUrl="https://export.arxiv.org/api/query?search_query=cat%3Aq-fin.TR+OR+cat%3Aq-fin.ST+OR+cat%3Aq-fin.CP+OR+all%3A%22econophysics%22&amp;sortBy=submittedDate&amp;sortOrder=descending&amp;max_results=40"/>
+</outline>
+</body></opml>

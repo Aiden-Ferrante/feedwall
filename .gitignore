@@ -1,0 +1,10 @@
+# live FreshRSS instance state (bind-mounted into the container; root-owned,
+# holds the user DB + password hashes) — never commit
+data/
+extensions/
+
+# brain runtime output (scored items DB)
+brain-data/
+
+__pycache__/
+*.pyc

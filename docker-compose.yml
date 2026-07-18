@@ -1,0 +1,24 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    container_name: feedwall
+    restart: unless-stopped
+    ports:
+      - "8970:80"
+    volumes:
+      - ./data:/var/www/FreshRSS/data
+      - ./extensions:/var/www/FreshRSS/extensions
+    environment:
+      TZ: America/New_York
+      # refresh all feeds every 20 min (in-container cron)
+      CRON_MIN: '*/20'
+      # one-shot auto-provision so there's no web wizard on first boot
+      FRESHRSS_INSTALL: |-
+        --api-enabled
+        --base-url http://localhost:8970
+        --default-user mooteo
+        --language en
+      FRESHRSS_USER: |-
+        --user mooteo
+        --password changeme-feedwall
+        --api-password changeme-feedwall
