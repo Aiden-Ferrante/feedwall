@@ -54,13 +54,27 @@ def wall_data(hours: int) -> dict:
             "labels": LANE_LABELS, "hours": hours}
 
 
+
+# The fleet's shared tokens and header chrome, inlined at startup. A sibling
+# directory is not a guarantee, so a missing file costs the palette and nothing
+# else — an admin page that will not render because a stylesheet moved is worse
+# than one that renders in its own colours.
+FLEET_CSS_PATH = Path(
+    os.environ.get("FLEET_UI_CSS", Path.home() / "Desktop/code/fleet-ui/fleet.css"))
+try:
+    FLEET_CSS = FLEET_CSS_PATH.read_text(encoding="utf-8")
+except OSError:
+    FLEET_CSS = ""
+
 PAGE = """<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>feedwall</title><style>
-:root{--bg:#0d1117;--panel:#161b22;--border:#30363d;--fg:#e6edf3;
---muted:#8b949e;--accent:#4da3ff;}
+<title>feedwall</title><style>/*FLEET*/
+:root{--bg:var(--fleet-bg);--panel:var(--fleet-surface);
+--border:var(--fleet-border);--fg:var(--fleet-text);
+--muted:var(--fleet-text-faint);--accent:var(--fleet-accent);}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);
-font:15px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif;padding:24px}
+font:15px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif}
+main{padding:24px;max-width:72rem;margin:0 auto}
 h1{font-size:20px;margin:0 0 4px}h1 span{color:var(--accent)}
 .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
 .top{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
@@ -83,11 +97,41 @@ padding:12px}
 .s{color:var(--muted);font-size:11px;margin-right:6px}
 .quiet{color:var(--muted);font-style:italic;font-size:13px}
 </style></head><body>
-<h1>feed<span>wall</span></h1>
-<div class="sub" id="sub">loading…</div>
+<header class="fleet-header"><div class="fleet-header-inner">
+  <nav class="fleet-apps" aria-label="Fleet" id="fleetnav"><p class="fleet-wordmark">fleet</p></nav>
+  <div class="fleet-sections">
+    <h1 class="fleet-brand">feed<span>wall</span></h1>
+    <div class="fleet-actions"><p class="fleet-sub" id="sub">loading…</p></div>
+  </div>
+</div></header>
+<main>
 <div class="top" id="top"></div>
 <div class="lanes" id="lanes"></div>
+</main>
 <script>
+/* Tier one, built client-side because this page is one static string. Ports are
+   resolved against whoever is reading — feedwall binds 0.0.0.0 and gets opened
+   over the tailnet, where a literal localhost points at the reading machine.
+   Keep in step with code/fleet-ui/apps.js; PLATFORM.md Wave 3 retires the copy. */
+const FLEET_APPS = [
+  ['shipyard','Shipyard',8845],['mission-control','Control',9090],
+  ['vault-dashboard','Vault',8989],['learnhub','Learn',3001],
+  ['feedwall','Feed',8975],
+];
+(() => {
+  const nav = document.getElementById('fleetnav');
+  for (const [id, label, port] of FLEET_APPS) {
+    if (id === 'feedwall') {
+      const cur = document.createElement('span');
+      cur.className = 'fleet-app'; cur.setAttribute('aria-current','page');
+      cur.textContent = label; nav.appendChild(cur);
+    } else {
+      const a = document.createElement('a');
+      a.className = 'fleet-app'; a.href = `http://${location.hostname}:${port}`;
+      a.textContent = label; nav.appendChild(a);
+    }
+  }
+})();
 async function load(){
   const d = await (await fetch('/api/wall')).json();
   document.getElementById('sub').textContent =
@@ -131,7 +175,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = urllib.parse.urlparse(self.path)
         if path.path in ("/", "/index.html"):
-            self._send(200, PAGE.encode(), "text/html; charset=utf-8")
+            self._send(200, PAGE.replace("/*FLEET*/", FLEET_CSS).encode(),
+                       "text/html; charset=utf-8")
         elif path.path == "/api/wall":
             hours = int(dict(urllib.parse.parse_qsl(path.query)).get("hours", 24))
             self._send(200, wall_data(hours))
