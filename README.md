@@ -30,3 +30,4 @@ Read the briefing in Obsidian (or the wall at http://localhost:8975). **Star** w
 - Login `mooteo` / change the default password (Settings → Profile), then update `FEEDWALL_API_PASS` env for the brain if you change the API password.
 - Timers: `systemctl --user list-timers feedwall-briefing.timer`; logs: `journalctl --user -u feedwall-briefing`.
 - Gaps by design: Discord (GPU MODE) and X/Twitter — lurk in-app. Reddit sometimes 403s FreshRSS's UA.
+- The `benchmarks` lane (`benchmarks.opml`) has a standing gap: **Epoch AI, Artificial Analysis, LMArena and LiveBench publish no usable feed** — check those by hand. Details and the traps (LMArena returns HTTP 200 *HTML* for `/rss`) are in [discovered.md](discovered.md).

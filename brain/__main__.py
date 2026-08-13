@@ -28,6 +28,8 @@ def cmd_run(args):
             continue
         if re.match(config.TITLE_SKIP_RE, item["title"].strip()):
             continue
+        if re.match(config.URL_SKIP_RE, item["url"]):
+            continue
         if scored >= args.limit:
             break
         is_paper = item["category"] == config.PAPERS_CATEGORY
@@ -41,6 +43,8 @@ def cmd_run(args):
         if is_paper:
             verdict["lane"] = "papers"  # papers never leak into news lanes
             papers_scored += 1
+        elif item["category"] == config.BENCHMARKS_CATEGORY:
+            verdict["lane"] = "benchmarks"  # see config: the hint alone leaks to ai-ml
         db.upsert_item(con, item, verdict["lane"], verdict["score"], verdict["tldr"])
         scored += 1
         if scored % 25 == 0:
@@ -58,6 +62,8 @@ def cmd_run(args):
                 verdict = {"lane": "other", "score": 7.0, "tldr": ""}
             if is_paper:
                 verdict["lane"] = "papers"
+            elif item["category"] == config.BENCHMARKS_CATEGORY:
+                verdict["lane"] = "benchmarks"
             db.upsert_item(con, item, verdict["lane"], verdict["score"], verdict["tldr"])
         db.mark_starred(con, item["id"])
         starred_ids += 1

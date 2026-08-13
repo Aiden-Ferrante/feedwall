@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0"><head><title>feedwall benchmarks lane — eval &amp; leaderboard primary sources</title></head><body>
+<outline text="Benchmarks &amp; Evals">
+  <outline type="rss" text="METR — blog" xmlUrl="https://metr.org/feed.xml" htmlUrl="https://metr.org/blog"/>
+  <outline type="rss" text="ARC Prize — blog" xmlUrl="https://arcprize.org/feed.xml" htmlUrl="https://arcprize.org/blog"/>
+  <outline type="rss" text="Stanford CRFM (HELM)" xmlUrl="https://crfm.stanford.edu/feed.xml" htmlUrl="https://crfm.stanford.edu/"/>
+  <outline type="rss" text="SWE-bench — releases" xmlUrl="https://github.com/SWE-bench/SWE-bench/releases.atom" htmlUrl="https://github.com/SWE-bench/SWE-bench/releases"/>
+  <outline type="rss" text="tau2-bench — releases" xmlUrl="https://github.com/sierra-research/tau2-bench/releases.atom" htmlUrl="https://github.com/sierra-research/tau2-bench/releases"/>
+  <outline type="rss" text="Gorilla / BFCL — releases" xmlUrl="https://github.com/ShishirPatil/gorilla/releases.atom" htmlUrl="https://github.com/ShishirPatil/gorilla/releases"/>
+  <outline type="rss" text="Terminal-Bench — commits" xmlUrl="https://github.com/harbor-framework/terminal-bench-1/commits/main.atom" htmlUrl="https://github.com/harbor-framework/terminal-bench-1"/>
+</outline>
+</body></opml>

@@ -21,7 +21,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from brain import config, db  # noqa: E402
 
 LANE_LABELS = {
-    "papers": "Papers", "ai-ml": "AI/ML", "systems": "Systems/GPU",
+    "papers": "Papers", "benchmarks": "Benchmarks", "ai-ml": "AI/ML",
+    "systems": "Systems/GPU",
     "markets": "Markets", "causal-stats": "Causal & Stats",
     "data-eng": "Data Eng", "tech": "Tech", "other": "Other",
 }

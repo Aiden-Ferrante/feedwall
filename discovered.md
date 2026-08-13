@@ -220,3 +220,32 @@ and replaced with three targeted arXiv **API query** feeds
 To re-add a firehose, the old URLs were `https://export.arxiv.org/rss/<cat>`.
 Query terms are edited by regenerating the URL (any OR list of `all:"..."`
 phrases works) and updating both FreshRSS and `papers.opml`.
+
+## 2026-08-13 — benchmarks lane
+
+New `benchmarks` lane + `Benchmarks & Evals` FreshRSS category (`benchmarks.opml`),
+for reading model-release claims critically: what a quoted score measures, whether
+the benchmark is saturated/contaminated, and when a harness version changes under
+the number. Lane boundary: **benchmarks = a benchmark or leaderboard changed**;
+research *about* evaluation stays in `papers` (that lane's agents/evals arXiv query
+already matches "agent benchmark"/"agent evaluation"/"SWE-bench").
+
+Every URL below was fetched and confirmed to return real XML with entries:
+
+- METR — blog · https://metr.org/feed.xml · org · time-horizon evals ("task length a model finishes at 50% reliability"), the best long-horizon-autonomy signal.
+- ARC Prize — blog · https://arcprize.org/feed.xml · org · ARC-AGI-2/3 results and the contamination-resistant eval design argument.
+- Stanford CRFM (HELM) · https://crfm.stanford.edu/feed.xml · org · HELM leaderboards + the AI Index saturation work.
+- SWE-bench — releases · https://github.com/SWE-bench/SWE-bench/releases.atom · repo · harness/dataset versions; Verified-vs-Pro scores are not comparable across versions.
+- tau2-bench — releases · https://github.com/sierra-research/tau2-bench/releases.atom · repo · multi-turn tool-use agent eval.
+- Gorilla / BFCL — releases · https://github.com/ShishirPatil/gorilla/releases.atom · repo · function-calling leaderboard (AST-compared, not LLM-judged).
+- Terminal-Bench — commits · https://github.com/harbor-framework/terminal-bench-1/commits/main.atom · repo · long-horizon shell agent eval; `releases.atom` and `tags.atom` are both **empty**, so commits it is (sparse — ~2 bursts in 2026). The old `laude-institute/terminal-bench` URL **301s** here (caught on first actualize); repo moved under the Harbor framework.
+
+### No RSS — check by hand (all four verified: no feed, no autodiscovery link)
+- **Epoch AI** · https://epoch.ai — JS-rendered, 404 on every feed path tried. NOTE: `epoch.substack.com/feed` resolves but is an unrelated blog ("epochs and talents", last post 2020) — do **not** subscribe it.
+- **Artificial Analysis** · https://artificialanalysis.ai — 404 on /feed, /rss, /rss.xml, /blog/rss.xml. The single most useful independent leaderboard (composite of ~10 evals, ~72h refresh) and it has no feed. Email newsletter only.
+- **LMArena** · https://news.lmarena.ai — SPA that returns **HTTP 200 with HTML** for /rss, /rss.xml, /feed, /index.xml. Subscribing any of those would silently add a broken feed; don't.
+- **LiveBench** · https://github.com/LiveBench/LiveBench — releases/tags empty and `commits/main.atom` runs several commits/day of build churn. Rejected as noise; the monthly question rotation isn't announced via feed anyway. Watch https://livebench.ai.
+
+Standing gap: the leaderboards with the best methodology are the ones without feeds.
+If this lane ever justifies it, the fix is a small scraper posting into FreshRSS —
+not more feed-path guessing.

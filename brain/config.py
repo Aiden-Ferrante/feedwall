@@ -24,7 +24,8 @@ VAULTWRITER_URL = os.environ.get("FEEDWALL_VAULTWRITER_URL", "http://localhost:8
 # Learn hub (txt2kg learn service) — source of the briefing's "Study debt" section.
 LEARN_URL = os.environ.get("FEEDWALL_LEARN_URL", "http://localhost:8010")
 
-LANES = ["papers", "ai-ml", "systems", "markets", "causal-stats", "data-eng", "tech"]
+LANES = ["papers", "benchmarks", "ai-ml", "systems", "markets", "causal-stats",
+         "data-eng", "tech"]
 
 # Research papers get their own lane with a papers-specific rubric (see
 # score.build_system_prompt). Cap per run so an arXiv burst can't crowd the
@@ -32,15 +33,38 @@ LANES = ["papers", "ai-ml", "systems", "markets", "causal-stats", "data-eng", "t
 PAPERS_CATEGORY = "Papers"
 PAPERS_MAX_PER_RUN = 40
 
+# The benchmarks lane answers "did a benchmark or leaderboard change?" — new
+# benchmark releases, harness/dataset versions, contamination findings, eval
+# org write-ups. Research *about* evaluation stays in the papers lane (the
+# agents/evals arXiv query there already covers "agent benchmark"/"SWE-bench"),
+# so no arXiv feed lives under "Benchmarks & Evals": items in that category are
+# scored by the news rubric, which would misjudge a bare abstract.
+# Feeds: benchmarks.opml. No per-run cap — the whole category is <5 items/day.
+#
+# Pinned like PAPERS_CATEGORY rather than left to the lane hint: on a 6-item
+# sample the scorer sent half the category to ai-ml anyway (including a METR
+# post literally titled "Measuring Optimization Ability"), because the profile
+# ranks eval content high in ai-ml and the hint is only a soft prior. Every feed
+# in this category is a benchmark primary source by construction, so pin it.
+# The "benchmarks" enum value stays available to all lanes, so a benchmark story
+# from an ai-ml feed can still opt in.
+BENCHMARKS_CATEGORY = "Benchmarks & Evals"
+
 # Feed noise that should never reach the scorer (e.g. PyTorch's releases.atom
 # emits a "release" for every trunk/ciflow CI tag; llama.cpp cuts a bare
 # build-number release like "b6032" on nearly every merge).
 TITLE_SKIP_PREFIXES = ("trunk/", "ciflow/", "nightly/")
 TITLE_SKIP_RE = r"^b\d{3,6}$"
 
+# Translated re-posts of an article already in the feed, served under a locale
+# path prefix (METR ships every blog post in en/es/zh-Hans, which cost 2 of the
+# benchmarks lane's 8 wall slots on day one). Skip the non-English copies.
+URL_SKIP_RE = r"^https?://[^/]+/(es|fr|de|ja|ko|pt|ru|zh|zh-Hans|zh-Hant)/"
+
 # FreshRSS category label -> lane hint (soft prior, model may override)
 CATEGORY_LANE_HINTS = {
     "Papers": "papers",
+    "Benchmarks & Evals": "benchmarks",
     "AI/ML — Blogs & Newsletters": "ai-ml",
     "Discovered — AI-lab official blogs": "ai-ml",
     "Discovered — individual AI/ML researchers": "ai-ml",

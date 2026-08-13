@@ -17,6 +17,7 @@ from brain import config, db
 
 LANE_LABELS = {
     "papers": "Papers",
+    "benchmarks": "Benchmarks",
     "ai-ml": "AI/ML",
     "systems": "Systems/GPU",
     "markets": "Markets",
