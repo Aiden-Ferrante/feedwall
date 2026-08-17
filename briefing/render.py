@@ -144,7 +144,15 @@ def main():
     if args.stdout:
         print(body)
     else:
-        print(f"briefing written: {post(body)}")
+        path = post(body)
+        # The wall's /health briefing check keys off this — only a successful
+        # post counts, so eight silent days of a dead vaultwriter read as stale.
+        con = db.connect()
+        db.set_meta(con, "last_briefed",
+                    datetime.datetime.now().astimezone().isoformat(timespec="seconds"))
+        con.commit()
+        con.close()
+        print(f"briefing written: {path}")
 
 
 if __name__ == "__main__":

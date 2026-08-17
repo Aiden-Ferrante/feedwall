@@ -6,14 +6,16 @@ Zero-dependency stdlib server (same idiom as vaultwriter/video-dashboard).
 
     GET /            HTML wall (top-5 + lane columns, auto-refreshes)
     GET /api/wall    {"top": [...], "lanes": {lane: [...]}, "scored": n}
-    GET /health      {"status": "ok", "items": n}
+    GET /health      {"ok": bool, "checks": {db, vaultwriter, briefing}, ...}
 """
 import argparse
+import datetime
 import json
 import os
 import sys
 import time
 import urllib.parse
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -183,24 +185,47 @@ class Handler(BaseHTTPRequestHandler):
             hours = int(dict(urllib.parse.parse_qsl(path.query)).get("hours", 24))
             self._send(200, wall_data(hours))
         elif path.path == "/health":
-            con = db.connect()
-            row = con.execute(
-                "SELECT COUNT(*) c, MAX(scored_at) newest FROM items"
-            ).fetchone()
-            con.close()
-            newest = row["newest"]
-            freshness = {}
+            try:
+                con = db.connect()
+                row = con.execute(
+                    "SELECT COUNT(*) c, MAX(scored_at) newest FROM items"
+                ).fetchone()
+                briefed = db.get_meta(con, "last_briefed")
+                con.close()
+                db_ok, items, newest = row["c"] > 0, row["c"], row["newest"]
+            except Exception:
+                db_ok, items, newest, briefed = False, 0, None, None
+            try:
+                with urllib.request.urlopen(
+                    f"{config.VAULTWRITER_URL}/health", timeout=2
+                ) as r:
+                    vw_ok = bool(json.loads(r.read().decode()).get("ok"))
+            except Exception:
+                vw_ok = False
+            # No meta (or garbage in it) is stale, not a crash — the key only
+            # exists once a briefing has actually landed in the vault.
+            briefing_ok = False
+            if briefed:
+                try:
+                    briefing_ok = (time.time() - datetime.datetime.fromisoformat(
+                        briefed).timestamp()) < 48 * 3600
+                except ValueError:
+                    pass
+            freshness = {"briefed": briefed}
             if newest:
                 freshness["scored"] = time.strftime(
                     "%Y-%m-%dT%H:%M:%S%z", time.localtime(newest)
                 )
-            # Platform health shape (ok/checks/freshness); items kept for old callers.
+            # Platform health shape (ok/checks/freshness); items kept for old
+            # callers. ok requires a live briefing: a wall that renders while the
+            # 06:45 note silently stops arriving is exactly the failure to surface.
             self._send(200, {
-                "ok": row["c"] > 0,
-                "checks": {"db": True},
+                "ok": db_ok and briefing_ok,
+                "checks": {"db": db_ok, "vaultwriter": vw_ok,
+                           "briefing": briefing_ok},
                 "freshness": freshness,
-                "status": "ok",
-                "items": row["c"],
+                "status": "ok" if db_ok and briefing_ok else "degraded",
+                "items": items,
             })
         else:
             self._send(404, {"error": "not found"})
