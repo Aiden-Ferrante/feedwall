@@ -136,6 +136,18 @@ const FLEET_APPS = [
     }
   }
 })();
+/* Feed items are third-party internet content: escape every text field, and
+   only link URLs that parse as http(s) — anything else renders as plain text. */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function link(url, text){
+  try {
+    const u = new URL(url);
+    if (u.protocol === 'http:' || u.protocol === 'https:')
+      return `<a href="${esc(u.href)}" target="_blank">${esc(text)}</a>`;
+  } catch {}
+  return esc(text);
+}
 async function load(){
   const d = await (await fetch('/api/wall')).json();
   document.getElementById('sub').textContent =
@@ -146,18 +158,18 @@ async function load(){
   for (const it of d.top){
     top.insertAdjacentHTML('beforeend',
       `<div class="card"><span class="badge">${it.score.toFixed(0)}</span>
-       <a href="${it.url}" target="_blank">${it.title}</a>
-       <div class="tldr">${it.tldr}</div>
-       <div class="meta">${d.labels[it.lane]||it.lane} · ${it.feed}</div></div>`);
+       ${link(it.url, it.title)}
+       <div class="tldr">${esc(it.tldr)}</div>
+       <div class="meta">${esc(d.labels[it.lane]||it.lane)} · ${esc(it.feed)}</div></div>`);
   }
   const lanes = document.getElementById('lanes'); lanes.innerHTML='';
   for (const [lane, items] of Object.entries(d.lanes)){
     const rows = items.length ? items.map(it =>
       `<li><span class="s">${it.score.toFixed(0)}</span>
-       <a href="${it.url}" target="_blank">${it.title}</a></li>`).join('')
+       ${link(it.url, it.title)}</li>`).join('')
       : '<li class="quiet">quiet</li>';
     lanes.insertAdjacentHTML('beforeend',
-      `<div class="lane"><h2>${d.labels[lane]}</h2><ul>${rows}</ul></div>`);
+      `<div class="lane"><h2>${esc(d.labels[lane])}</h2><ul>${rows}</ul></div>`);
   }
 }
 load(); setInterval(load, 5*60*1000);
