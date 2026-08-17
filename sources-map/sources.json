@@ -1,0 +1,1582 @@
+{
+ "total": 143,
+ "subjects": [
+  {
+   "id": "economy",
+   "count": 23,
+   "groups": [
+    {
+     "id": "commentary",
+     "count": 9,
+     "feeds": [
+      {
+       "name": "Marginal Revolution (econ)",
+       "url": "https://marginalrevolution.com/feed",
+       "entries": 175,
+       "broken": false,
+       "cat": "Markets & Econ",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "Brad DeLong",
+       "url": "https://braddelong.substack.com/feed",
+       "entries": 65,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "Paul Krugman",
+       "url": "https://paulkrugman.substack.com/feed",
+       "entries": 55,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "Noahpinion (Noah Smith)",
+       "url": "https://www.noahpinion.blog/feed",
+       "entries": 38,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "The Grumpy Economist (John Cochrane)",
+       "url": "https://www.grumpy-economist.com/feed",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "Conversable Economist (Timothy Taylor)",
+       "url": "https://conversableeconomist.com/feed/",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "EconLog",
+       "url": "https://www.econlib.org/feed/",
+       "entries": 23,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "Tim Harford",
+       "url": "https://timharford.com/feed/",
+       "entries": 18,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      },
+      {
+       "name": "VoxEU / CEPR columns",
+       "url": "https://cepr.org/rss.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "economy",
+       "group": "commentary",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "central-bank",
+     "count": 6,
+     "feeds": [
+      {
+       "name": "Liberty Street Economics (NY Fed)",
+       "url": "https://libertystreeteconomics.newyorkfed.org/feed/",
+       "entries": 112,
+       "broken": true,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "economy",
+       "group": "central-bank",
+       "tier": "analysis"
+      },
+      {
+       "name": "Federal Reserve \u2014 Press Releases",
+       "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+       "entries": 37,
+       "broken": false,
+       "cat": "Markets & Econ",
+       "subject": "economy",
+       "group": "central-bank",
+       "tier": "primary"
+      },
+      {
+       "name": "ECB \u2014 Press Releases",
+       "url": "https://www.ecb.europa.eu/rss/press.html",
+       "entries": 37,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "central-bank",
+       "tier": "primary"
+      },
+      {
+       "name": "Fed \u2014 FEDS Notes",
+       "url": "https://www.federalreserve.gov/feeds/feds_notes.xml",
+       "entries": 22,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "economy",
+       "group": "central-bank",
+       "tier": "primary"
+      },
+      {
+       "name": "Atlanta Fed \u2014 Macroblog",
+       "url": "https://www.atlantafed.org/RSS/macroblog",
+       "entries": 15,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "central-bank",
+       "tier": "analysis"
+      },
+      {
+       "name": "Bank Underground (BoE)",
+       "url": "https://bankunderground.co.uk/feed/",
+       "entries": 14,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "economy",
+       "group": "central-bank",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "indicators",
+     "count": 6,
+     "feeds": [
+      {
+       "name": "Econbrowser (Hamilton & Chinn)",
+       "url": "https://econbrowser.com/feed",
+       "entries": 70,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "indicators",
+       "tier": "analysis"
+      },
+      {
+       "name": "BEA \u2014 News Releases",
+       "url": "https://apps.bea.gov/rss/rss.xml",
+       "entries": 52,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "indicators",
+       "tier": "primary"
+      },
+      {
+       "name": "Calculated Risk",
+       "url": "https://www.calculatedriskblog.com/feeds/posts/default",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "economy",
+       "group": "indicators",
+       "tier": "analysis"
+      },
+      {
+       "name": "FRED Blog (St. Louis Fed)",
+       "url": "https://fredblog.stlouisfed.org/feed/",
+       "entries": 20,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "economy",
+       "group": "indicators",
+       "tier": "analysis"
+      },
+      {
+       "name": "Apricitas Economics",
+       "url": "https://www.apricitas.io/feed",
+       "entries": 20,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "indicators",
+       "tier": "analysis"
+      },
+      {
+       "name": "Census \u2014 Economic Indicators",
+       "url": "https://www.census.gov/economic-indicators/indicator.xml",
+       "entries": 18,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "indicators",
+       "tier": "primary"
+      }
+     ]
+    },
+    {
+     "id": "labor",
+     "count": 1,
+     "feeds": [
+      {
+       "name": "Employ America",
+       "url": "https://www.employamerica.org/rss/",
+       "entries": 32,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "labor",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "fiscal",
+     "count": 1,
+     "feeds": [
+      {
+       "name": "CBO \u2014 Publications",
+       "url": "https://www.cbo.gov/publications/all/rss.xml",
+       "entries": 117,
+       "broken": false,
+       "cat": "Discovered \u2014 macro & econ data",
+       "subject": "economy",
+       "group": "fiscal",
+       "tier": "primary"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "markets",
+   "count": 7,
+   "groups": [
+    {
+     "id": "research",
+     "count": 5,
+     "feeds": [
+      {
+       "name": "Klement on Investing",
+       "url": "https://klementoninvesting.substack.com/feed",
+       "entries": 44,
+       "broken": false,
+       "cat": "Discovered \u2014 econ analysis & commentary",
+       "subject": "markets",
+       "group": "research",
+       "tier": "analysis"
+      },
+      {
+       "name": "Aswath Damodaran \u2014 Musings on Markets",
+       "url": "https://aswathdamodaran.blogspot.com/feeds/posts/default",
+       "entries": 27,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "markets",
+       "group": "research",
+       "tier": "analysis"
+      },
+      {
+       "name": "Robert Carver \u2014 Investment Idiocy",
+       "url": "https://qoppac.blogspot.com/feeds/posts/default",
+       "entries": 26,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "markets",
+       "group": "research",
+       "tier": "analysis"
+      },
+      {
+       "name": "Alpha Architect",
+       "url": "https://alphaarchitect.com/feed/",
+       "entries": 12,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "markets",
+       "group": "research",
+       "tier": "analysis"
+      },
+      {
+       "name": "Flirting with Models (Newfound)",
+       "url": "https://blog.thinknewfound.com/feed/",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "markets",
+       "group": "research",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "news",
+     "count": 2,
+     "feeds": [
+      {
+       "name": "Investing.com \u2014 News",
+       "url": "https://www.investing.com/rss/news.rss",
+       "entries": 699,
+       "broken": false,
+       "cat": "Markets & Econ",
+       "subject": "markets",
+       "group": "news",
+       "tier": "wire"
+      },
+      {
+       "name": "MarketWatch \u2014 Top Stories",
+       "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories",
+       "entries": 217,
+       "broken": false,
+       "cat": "Markets & Econ",
+       "subject": "markets",
+       "group": "news",
+       "tier": "wire"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "politics",
+   "count": 1,
+   "groups": [
+    {
+     "id": "regulation",
+     "count": 1,
+     "feeds": [
+      {
+       "name": "SEC \u2014 Press Releases",
+       "url": "https://www.sec.gov/news/pressreleases.rss",
+       "entries": 37,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "politics",
+       "group": "regulation",
+       "tier": "primary"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "geopolitics",
+   "count": 0,
+   "groups": []
+  },
+  {
+   "id": "technology",
+   "count": 97,
+   "groups": [
+    {
+     "id": "ai",
+     "count": 49,
+     "feeds": [
+      {
+       "name": "OpenAI \u2014 News",
+       "url": "https://openai.com/news/rss.xml",
+       "entries": 1111,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Hugging Face \u2014 Blog",
+       "url": "https://huggingface.co/blog/feed.xml",
+       "entries": 835,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Lex Fridman Podcast",
+       "url": "https://lexfridman.com/feed/podcast/",
+       "entries": 500,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Practical AI (Changelog)",
+       "url": "https://feeds.transistor.fm/practical-ai-machine-learning-data-science-llm",
+       "entries": 369,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "r/LocalLLaMA",
+       "url": "https://www.reddit.com/r/LocalLLaMA/.rss",
+       "entries": 219,
+       "broken": false,
+       "cat": "Discovered \u2014 forums & communities",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "discussion"
+      },
+      {
+       "name": "Eugene Yan",
+       "url": "https://eugeneyan.com/rss/",
+       "entries": 212,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "r/MachineLearning",
+       "url": "https://www.reddit.com/r/MachineLearning/.rss",
+       "entries": 205,
+       "broken": false,
+       "cat": "Discovered \u2014 forums & communities",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "discussion"
+      },
+      {
+       "name": "Philipp Schmid",
+       "url": "https://www.philschmid.de/rss",
+       "entries": 205,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "NVIDIA \u2014 Technical Blog",
+       "url": "https://developer.nvidia.com/blog/feed/",
+       "entries": 151,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Simon Willison",
+       "url": "https://simonwillison.net/atom/everything/",
+       "entries": 150,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Together AI \u2014 Blog",
+       "url": "https://www.together.ai/blog/rss.xml",
+       "entries": 113,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Google DeepMind \u2014 Blog",
+       "url": "https://deepmind.google/blog/rss.xml",
+       "entries": 111,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Google Research \u2014 Blog",
+       "url": "https://research.google/blog/rss/",
+       "entries": 106,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Databricks \u2014 Blog",
+       "url": "https://www.databricks.com/blog/feed.xml",
+       "entries": 81,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Latent Space",
+       "url": "https://www.latent.space/feed",
+       "entries": 62,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "PyTorch Forums \u2014 Latest",
+       "url": "https://discuss.pytorch.org/latest.rss",
+       "entries": 60,
+       "broken": false,
+       "cat": "Discovered \u2014 forums & communities",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "discussion"
+      },
+      {
+       "name": "Lil'Log (Lilian Weng)",
+       "url": "https://lilianweng.github.io/index.xml",
+       "entries": 53,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Apple \u2014 Machine Learning Research",
+       "url": "https://machinelearning.apple.com/rss.xml",
+       "entries": 51,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "EleutherAI \u2014 Blog",
+       "url": "https://blog.eleuther.ai/index.xml",
+       "entries": 51,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Qwen (Alibaba) \u2014 Blog",
+       "url": "https://qwenlm.github.io/blog/index.xml",
+       "entries": 44,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Hamel Husain",
+       "url": "https://hamel.dev/index.xml",
+       "entries": 42,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "The Kaitchup (Benjamin Marie)",
+       "url": "https://kaitchup.substack.com/feed",
+       "entries": 30,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Nathan Lambert \u2014 Interconnects",
+       "url": "https://www.interconnects.ai/feed",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "ThursdAI",
+       "url": "https://sub.thursdai.news/feed",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Import AI (Jack Clark)",
+       "url": "https://importai.substack.com/feed",
+       "entries": 24,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Dwarkesh Podcast",
+       "url": "https://www.dwarkesh.com/feed",
+       "entries": 24,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "PyTorch \u2014 Blog",
+       "url": "https://pytorch.org/blog/feed/",
+       "entries": 23,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Ahead of AI (Sebastian Raschka)",
+       "url": "https://magazine.sebastianraschka.com/feed",
+       "entries": 21,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Cameron R. Wolfe",
+       "url": "https://cameronrwolfe.substack.com/feed",
+       "entries": 21,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "fast.ai",
+       "url": "https://www.fast.ai/index.xml",
+       "entries": 21,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Jason Liu (jxnl)",
+       "url": "https://jxnl.co/feed_rss_created.xml",
+       "entries": 21,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Maxime Labonne",
+       "url": "https://maximelabonne.substack.com/feed",
+       "entries": 21,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Vicki Boykis",
+       "url": "https://vickiboykis.com/index.xml",
+       "entries": 20,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Microsoft Research \u2014 Blog",
+       "url": "https://www.microsoft.com/en-us/research/feed/",
+       "entries": 17,
+       "broken": false,
+       "cat": "Discovered \u2014 AI-lab official blogs",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "primary"
+      },
+      {
+       "name": "Andrej Karpathy (YouTube)",
+       "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw",
+       "entries": 17,
+       "broken": false,
+       "cat": "Video",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "LessWrong \u2014 Curated",
+       "url": "https://www.lesswrong.com/feed.xml?view=curated-rss",
+       "entries": 17,
+       "broken": false,
+       "cat": "Discovered \u2014 forums & communities",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "discussion"
+      },
+      {
+       "name": "The Gradient",
+       "url": "https://thegradient.pub/rss/",
+       "entries": 15,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Sebastian Ruder",
+       "url": "https://www.ruder.io/rss/",
+       "entries": 15,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Machine Learning Street Talk",
+       "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCZHmQk67mSJgfCCTn7xBfew",
+       "entries": 15,
+       "broken": false,
+       "cat": "Video",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Ferenc Husz\u00e1r \u2014 inFERENCe",
+       "url": "https://www.inference.vc/rss/",
+       "entries": 15,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Berkeley AI Research (BAIR)",
+       "url": "https://bair.berkeley.edu/blog/feed.xml",
+       "entries": 14,
+       "broken": false,
+       "cat": "AI/ML \u2014 Blogs & Newsletters",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Andrej Karpathy",
+       "url": "https://karpathy.github.io/feed.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Chip Huyen",
+       "url": "https://huyenchip.com/feed.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Sander Dieleman",
+       "url": "https://sander.ai/feed.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Tim Dettmers",
+       "url": "https://timdettmers.com/feed/",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Jay Alammar",
+       "url": "https://jalammar.github.io/feed.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Georgi Gerganov (llama.cpp author)",
+       "url": "https://ggerganov.github.io/feed.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM practitioners & guides",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Fran\u00e7ois Chollet",
+       "url": "https://fchollet.substack.com/feed",
+       "entries": 6,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      },
+      {
+       "name": "Chris Olah",
+       "url": "https://colah.github.io/rss.xml",
+       "entries": 6,
+       "broken": false,
+       "cat": "Discovered \u2014 individual AI/ML researchers",
+       "subject": "technology",
+       "group": "ai",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "software",
+     "count": 32,
+     "feeds": [
+      {
+       "name": "The Changelog",
+       "url": "https://changelog.com/podcast/feed",
+       "entries": 1012,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Hacker News \u2014 Front Page",
+       "url": "https://hnrss.org/frontpage",
+       "entries": 500,
+       "broken": false,
+       "cat": "Code & Launches",
+       "subject": "technology",
+       "group": "software",
+       "tier": "discussion"
+      },
+      {
+       "name": "Supabase \u2014 Blog",
+       "url": "https://supabase.com/rss.xml",
+       "entries": 418,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "Hacker News \u2014 150+ points",
+       "url": "https://hnrss.org/newest?points=150",
+       "entries": 247,
+       "broken": false,
+       "cat": "Code & Launches",
+       "subject": "technology",
+       "group": "software",
+       "tier": "discussion"
+      },
+      {
+       "name": "PyTorch releases",
+       "url": "https://github.com/pytorch/pytorch/releases.atom",
+       "entries": 234,
+       "broken": false,
+       "cat": "Releases",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "Lobsters",
+       "url": "https://lobste.rs/rss",
+       "entries": 225,
+       "broken": false,
+       "cat": "Discovered \u2014 forums & communities",
+       "subject": "technology",
+       "group": "software",
+       "tier": "discussion"
+      },
+      {
+       "name": "llama.cpp releases",
+       "url": "https://github.com/ggml-org/llama.cpp/releases.atom",
+       "entries": 212,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "GitHub Trending \u2014 Python (daily)",
+       "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml",
+       "entries": 210,
+       "broken": false,
+       "cat": "Code & Launches",
+       "subject": "technology",
+       "group": "software",
+       "tier": "discussion"
+      },
+      {
+       "name": "GitHub Trending \u2014 All (daily)",
+       "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+       "entries": 194,
+       "broken": false,
+       "cat": "Code & Launches",
+       "subject": "technology",
+       "group": "software",
+       "tier": "discussion"
+      },
+      {
+       "name": "Oxide and Friends",
+       "url": "https://oxide-and-friends.transistor.fm/rss",
+       "entries": 184,
+       "broken": false,
+       "cat": "Discovered \u2014 AI/ML & systems podcasts",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Zed \u2014 Blog",
+       "url": "https://zed.dev/blog.rss",
+       "entries": 141,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "antirez (Salvatore Sanfilippo)",
+       "url": "https://antirez.com/rss",
+       "entries": 104,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Mitchell Hashimoto",
+       "url": "https://mitchellh.com/feed.xml",
+       "entries": 53,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Fly.io \u2014 Blog",
+       "url": "https://fly.io/blog/feed.xml",
+       "entries": 41,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "Andrew Kelley (Zig)",
+       "url": "https://andrewkelley.me/rss.xml",
+       "entries": 39,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "DHH (world.hey.com)",
+       "url": "https://world.hey.com/dhh/feed.atom",
+       "entries": 37,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Ollama releases",
+       "url": "https://github.com/ollama/ollama/releases.atom",
+       "entries": 31,
+       "broken": false,
+       "cat": "Releases",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "Oxide Computer \u2014 Blog",
+       "url": "https://oxide.computer/blog/feed",
+       "entries": 28,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "fasterthanli.me (Amos)",
+       "url": "https://fasterthanli.me/index.xml",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Unsloth releases",
+       "url": "https://github.com/unslothai/unsloth/releases.atom",
+       "entries": 23,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "ACM Queue",
+       "url": "https://queue.acm.org/rss/feeds/queuecontent.xml",
+       "entries": 22,
+       "broken": false,
+       "cat": "Discovered \u2014 publications/journals",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "Tailscale \u2014 Blog",
+       "url": "https://tailscale.com/blog/index.xml",
+       "entries": 20,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "vLLM releases",
+       "url": "https://github.com/vllm-project/vllm/releases.atom",
+       "entries": 18,
+       "broken": false,
+       "cat": "Releases",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "LangGraph releases",
+       "url": "https://github.com/langchain-ai/langgraph/releases.atom",
+       "entries": 16,
+       "broken": false,
+       "cat": "Releases",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "ExLlamaV3 releases",
+       "url": "https://github.com/turboderp-org/exllamav3/releases.atom",
+       "entries": 15,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "KoboldCpp releases",
+       "url": "https://github.com/LostRuins/koboldcpp/releases.atom",
+       "entries": 14,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "Xe Iaso",
+       "url": "https://xeiaso.net/blog.rss",
+       "entries": 14,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "technology",
+       "group": "software",
+       "tier": "analysis"
+      },
+      {
+       "name": "SGLang releases",
+       "url": "https://github.com/sgl-project/sglang/releases.atom",
+       "entries": 13,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "llamafile releases (Mozilla)",
+       "url": "https://github.com/mozilla-ai/llamafile/releases.atom",
+       "entries": 12,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "DuckDB releases",
+       "url": "https://github.com/duckdb/duckdb/releases.atom",
+       "entries": 11,
+       "broken": false,
+       "cat": "Releases",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "Open WebUI releases",
+       "url": "https://github.com/open-webui/open-webui/releases.atom",
+       "entries": 11,
+       "broken": false,
+       "cat": "Discovered \u2014 local-LLM releases & tooling",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      },
+      {
+       "name": "FreshRSS releases",
+       "url": "https://github.com/FreshRSS/FreshRSS/releases.atom",
+       "entries": 10,
+       "broken": false,
+       "cat": "Uncategorized",
+       "subject": "technology",
+       "group": "software",
+       "tier": "primary"
+      }
+     ]
+    },
+    {
+     "id": "infrastructure",
+     "count": 11,
+     "feeds": [
+      {
+       "name": "Marc Brooker",
+       "url": "https://brooker.co.za/blog/rss.xml",
+       "entries": 163,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Dan Luu",
+       "url": "https://danluu.com/atom.xml",
+       "entries": 130,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Lei Mao \u2014 Log Book",
+       "url": "https://leimao.github.io/feed.xml",
+       "entries": 76,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Cloudflare \u2014 Blog",
+       "url": "https://blog.cloudflare.com/rss/",
+       "entries": 62,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "primary"
+      },
+      {
+       "name": "GPU MODE (lectures)",
+       "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJgIbYl6C5no72a0NUAPcTA",
+       "entries": 25,
+       "broken": false,
+       "cat": "Video",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Julia Evans (jvns)",
+       "url": "https://jvns.ca/atom.xml",
+       "entries": 22,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Meta \u2014 Engineering",
+       "url": "https://engineering.fb.com/feed/",
+       "entries": 13,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "primary"
+      },
+      {
+       "name": "matklad (Alex Kladov)",
+       "url": "https://matklad.github.io/feed.xml",
+       "entries": 12,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Simon Boehm (siboehm)",
+       "url": "https://siboehm.com/feed.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Brendan Gregg",
+       "url": "https://www.brendangregg.com/blog/rss.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      },
+      {
+       "name": "Answer.AI",
+       "url": "https://www.answer.ai/index.xml",
+       "entries": 0,
+       "broken": true,
+       "cat": "Discovered \u2014 GPU/systems practitioners",
+       "subject": "technology",
+       "group": "infrastructure",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "general",
+     "count": 5,
+     "feeds": [
+      {
+       "name": "The Verge",
+       "url": "https://www.theverge.com/rss/index.xml",
+       "entries": 266,
+       "broken": false,
+       "cat": "Tech News",
+       "subject": "technology",
+       "group": "general",
+       "tier": "wire"
+      },
+      {
+       "name": "TechCrunch",
+       "url": "https://techcrunch.com/feed/",
+       "entries": 238,
+       "broken": false,
+       "cat": "Tech News",
+       "subject": "technology",
+       "group": "general",
+       "tier": "wire"
+      },
+      {
+       "name": "Ars Technica",
+       "url": "https://feeds.arstechnica.com/arstechnica/index",
+       "entries": 199,
+       "broken": false,
+       "cat": "Tech News",
+       "subject": "technology",
+       "group": "general",
+       "tier": "wire"
+      },
+      {
+       "name": "MIT Technology Review",
+       "url": "https://www.technologyreview.com/feed/",
+       "entries": 73,
+       "broken": false,
+       "cat": "Discovered \u2014 publications/journals",
+       "subject": "technology",
+       "group": "general",
+       "tier": "analysis"
+      },
+      {
+       "name": "IEEE Spectrum",
+       "url": "https://spectrum.ieee.org/feeds/feed.rss",
+       "entries": 69,
+       "broken": false,
+       "cat": "Discovered \u2014 publications/journals",
+       "subject": "technology",
+       "group": "general",
+       "tier": "analysis"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "science",
+   "count": 9,
+   "groups": [
+    {
+     "id": "papers",
+     "count": 6,
+     "feeds": [
+      {
+       "name": "arXiv query \u2014 agents, harnesses & evals",
+       "url": "https://export.arxiv.org/api/query?search_query=%28cat%3Acs.AI+OR+cat%3Acs.CL+OR+cat%3Acs.LG+OR+cat%3Acs.SE+OR+cat%3Acs.MA%29+AND+%28all%3A%22coding+agent%22+OR+all%3A%22agentic+coding%22+OR+all%3A%22agent+evaluation%22+OR+all%3A%22agent+benchmark%22+OR+all%3A%22SWE-bench%22+OR+all%3A%22agent+reliability%22+OR+all%3A%22agent+harness%22+OR+all%3A%22computer-use+agent%22+OR+all%3A%22context+engineering%22+OR+all%3A%22agent+framework%22+OR+all%3A%22long-horizon+agent%22%29&amp;sortBy=submittedDate&amp;sortOrder=descending&amp;max_results=40",
+       "entries": 220,
+       "broken": false,
+       "cat": "Papers",
+       "subject": "science",
+       "group": "papers",
+       "tier": "primary"
+      },
+      {
+       "name": "arXiv query \u2014 efficient LLM inference/serving",
+       "url": "https://export.arxiv.org/api/query?search_query=%28cat%3Acs.LG+OR+cat%3Acs.CL+OR+cat%3Acs.DC+OR+cat%3Acs.AR+OR+cat%3Acs.PF+OR+cat%3Acs.OS%29+AND+%28all%3A%22LLM+inference%22+OR+all%3A%22inference+serving%22+OR+all%3A%22KV+cache%22+OR+all%3A%22speculative+decoding%22+OR+all%3A%22post-training+quantization%22+OR+all%3A%22weight-only+quantization%22+OR+all%3A%22model+serving%22+OR+all%3A%22attention+kernel%22+OR+all%3A%22inference+latency%22+OR+all%3A%22MoE+inference%22%29&amp;sortBy=submittedDate&amp;sortOrder=descending&amp;max_results=40",
+       "entries": 210,
+       "broken": false,
+       "cat": "Papers",
+       "subject": "science",
+       "group": "papers",
+       "tier": "primary"
+      },
+      {
+       "name": "arXiv q-fin (Quantitative Finance)",
+       "url": "https://export.arxiv.org/rss/q-fin",
+       "entries": 178,
+       "broken": false,
+       "cat": "Discovered \u2014 markets/quant primary sources",
+       "subject": "science",
+       "group": "papers",
+       "tier": "primary"
+      },
+      {
+       "name": "JMLR (new papers)",
+       "url": "https://www.jmlr.org/jmlr.xml",
+       "entries": 137,
+       "broken": false,
+       "cat": "Discovered \u2014 publications/journals",
+       "subject": "science",
+       "group": "papers",
+       "tier": "primary"
+      },
+      {
+       "name": "arXiv query \u2014 econophysics & quant markets",
+       "url": "https://export.arxiv.org/api/query?search_query=cat%3Aq-fin.TR+OR+cat%3Aq-fin.ST+OR+cat%3Aq-fin.CP+OR+all%3A%22econophysics%22&amp;sortBy=submittedDate&amp;sortOrder=descending&amp;max_results=40",
+       "entries": 115,
+       "broken": false,
+       "cat": "Papers",
+       "subject": "science",
+       "group": "papers",
+       "tier": "primary"
+      },
+      {
+       "name": "Nature Machine Intelligence",
+       "url": "https://www.nature.com/natmachintell.rss",
+       "entries": 26,
+       "broken": false,
+       "cat": "Discovered \u2014 publications/journals",
+       "subject": "science",
+       "group": "papers",
+       "tier": "primary"
+      }
+     ]
+    },
+    {
+     "id": "methods",
+     "count": 2,
+     "feeds": [
+      {
+       "name": "Statistical Modeling (Andrew Gelman)",
+       "url": "https://statmodeling.stat.columbia.edu/feed/",
+       "entries": 99,
+       "broken": false,
+       "cat": "Stats & Causal",
+       "subject": "science",
+       "group": "methods",
+       "tier": "analysis"
+      },
+      {
+       "name": "3Blue1Brown",
+       "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC1_uAIS3r8Vu6JjXWvastJg",
+       "entries": 15,
+       "broken": false,
+       "cat": "Video",
+       "subject": "science",
+       "group": "methods",
+       "tier": "analysis"
+      }
+     ]
+    },
+    {
+     "id": "discoveries",
+     "count": 1,
+     "feeds": [
+      {
+       "name": "Quanta Magazine",
+       "url": "https://www.quantamagazine.org/feed/",
+       "entries": 25,
+       "broken": false,
+       "cat": "Discovered \u2014 publications/journals",
+       "subject": "science",
+       "group": "discoveries",
+       "tier": "analysis"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "society",
+   "count": 0,
+   "groups": []
+  },
+  {
+   "id": "energy",
+   "count": 0,
+   "groups": []
+  },
+  {
+   "id": "business",
+   "count": 6,
+   "groups": [
+    {
+     "id": "startups",
+     "count": 6,
+     "feeds": [
+      {
+       "name": "Pieter Levels (levels.io)",
+       "url": "https://levels.io/rss/",
+       "entries": 805,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "business",
+       "group": "startups",
+       "tier": "analysis"
+      },
+      {
+       "name": "Startups for the Rest of Us (Rob Walling)",
+       "url": "https://feeds.castos.com/mqv6",
+       "entries": 330,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "business",
+       "group": "startups",
+       "tier": "analysis"
+      },
+      {
+       "name": "Paul Graham \u2014 Essays",
+       "url": "http://www.aaronsw.com/2002/feeds/pgessays.rss",
+       "entries": 219,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "business",
+       "group": "startups",
+       "tier": "analysis"
+      },
+      {
+       "name": "A Smart Bear (Jason Cohen)",
+       "url": "https://longform.asmartbear.com/index.xml",
+       "entries": 166,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "business",
+       "group": "startups",
+       "tier": "analysis"
+      },
+      {
+       "name": "Show HN (50+ points)",
+       "url": "https://hnrss.org/show?points=50",
+       "entries": 155,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "business",
+       "group": "startups",
+       "tier": "discussion"
+      },
+      {
+       "name": "Ben Kuhn",
+       "url": "https://www.benkuhn.net/index.xml",
+       "entries": 10,
+       "broken": false,
+       "cat": "Discovered \u2014 builders in public",
+       "subject": "business",
+       "group": "startups",
+       "tier": "analysis"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

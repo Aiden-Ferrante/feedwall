@@ -1,0 +1,7 @@
+# Imported by shipyard.
+id: feedwall
+name: feedwall
+stage: product
+description: "A read-only frontier-awareness system: wide firehose intake (AI/ML, systems, markets, tech — ~97 curated primary-source feeds) curated by a local LLM…"
+links:
+  github: https://github.com/Aiden-Ferrante/feedwall

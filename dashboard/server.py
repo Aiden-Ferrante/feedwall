@@ -73,29 +73,30 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8">
 --border:var(--fleet-border);--fg:var(--fleet-text);
 --muted:var(--fleet-text-faint);--accent:var(--fleet-accent);}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);
-font:15px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif}
+font-family:-apple-system,'Segoe UI',Roboto,sans-serif;
+font-size:var(--fleet-text-body);line-height:1.5}
 main{padding:24px;max-width:72rem;margin:0 auto}
-h1{font-size:20px;margin:0 0 4px}h1 span{color:var(--accent)}
-.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+h1{margin:0 0 4px}h1 span{color:var(--accent)}
+.sub{color:var(--muted);font-size:var(--fleet-text-meta);margin-bottom:20px}
 .top{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:8px;
 padding:12px 16px}
 .card a{color:var(--fg);text-decoration:none;font-weight:600}
 .card a:hover{color:var(--accent)}
-.tldr{color:var(--muted);font-size:13px;margin-top:4px}
-.meta{font-size:12px;color:var(--muted);margin-top:6px}
-.badge{display:inline-block;background:#1f6feb33;color:var(--accent);
+.tldr{color:var(--muted);font-size:var(--fleet-text-meta);margin-top:4px}
+.meta{font-size:var(--fleet-text-meta);color:var(--muted);margin-top:6px}
+.badge{display:inline-block;background:color-mix(in srgb, var(--accent) 20%, transparent);color:var(--accent);font-family:var(--fleet-font-mono);
 border-radius:10px;padding:0 8px;font-weight:700;margin-right:8px}
 .lanes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .lane{background:var(--panel);border:1px solid var(--border);border-radius:8px;
 padding:12px}
-.lane h2{font-size:14px;margin:0 0 8px;color:var(--accent)}
+.lane h2{font-size:var(--fleet-text-title);margin:0 0 8px;color:var(--accent)}
 .lane ul{list-style:none;margin:0;padding:0}
-.lane li{padding:6px 0;border-top:1px solid var(--border);font-size:13px}
+.lane li{padding:6px 0;border-top:1px solid var(--border);font-size:var(--fleet-text-meta)}
 .lane li:first-child{border-top:0}
 .lane a{color:var(--fg);text-decoration:none}.lane a:hover{color:var(--accent)}
-.s{color:var(--muted);font-size:11px;margin-right:6px}
-.quiet{color:var(--muted);font-style:italic;font-size:13px}
+.s{color:var(--muted);font-size:var(--fleet-text-micro);font-family:var(--fleet-font-mono);margin-right:6px}
+.quiet{color:var(--muted);font-style:italic;font-size:var(--fleet-text-meta)}
 </style></head><body>
 <header class="fleet-header"><div class="fleet-header-inner">
   <nav class="fleet-apps" aria-label="Fleet" id="fleetnav"><p class="fleet-wordmark">fleet</p></nav>
@@ -127,7 +128,8 @@ const FLEET_APPS = [
       cur.textContent = label; nav.appendChild(cur);
     } else {
       const a = document.createElement('a');
-      a.className = 'fleet-app'; a.href = `http://${location.hostname}:${port}`;
+      a.className = 'fleet-app';
+      a.href = `${location.protocol}//${location.hostname}:${port}`;
       a.textContent = label; nav.appendChild(a);
     }
   }

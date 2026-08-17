@@ -1,0 +1,326 @@
+<title>feedwall - source map</title>
+
+<style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --panel-2:#1c232c; --border:#30363d; --border-2:#3d444d;
+  --fg:#e6edf3; --muted:#8b949e; --dim:#6e7681; --accent:#4da3ff;
+  --t-primary:#a5d6ff; --t-analysis:#58a6ff; --t-wire:#316dc2; --t-discussion:#414b5a;
+  --warn:#d29922; --crit:#f85149; --warn-bg:#d2992222;
+  --mono:ui-monospace,"JetBrains Mono","SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#ffffff; --panel:#f6f8fa; --panel-2:#eef1f4; --border:#d1d9e0; --border-2:#b7c0c9;
+  --fg:#1f2328; --muted:#59636e; --dim:#818b96; --accent:#0969da;
+  --t-primary:#0a3f88; --t-analysis:#1668d4; --t-wire:#5b9bea; --t-discussion:#b8c2cc;
+  --warn:#9a6700; --crit:#cf222e; --warn-bg:#9a670018;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#ffffff; --panel:#f6f8fa; --panel-2:#eef1f4; --border:#d1d9e0; --border-2:#b7c0c9;
+  --fg:#1f2328; --muted:#59636e; --dim:#818b96; --accent:#0969da;
+  --t-primary:#0a3f88; --t-analysis:#1668d4; --t-wire:#5b9bea; --t-discussion:#b8c2cc;
+  --warn:#9a6700; --crit:#cf222e; --warn-bg:#9a670018;
+  color-scheme:light;
+}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;overflow:hidden}
+#app{height:100%;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);
+  color:var(--fg);font-family:var(--mono);font-size:13px;overflow:hidden}
+
+.hdr{display:flex;align-items:center;gap:18px;flex-wrap:wrap;flex:none;padding:10px 18px;
+  border-bottom:1px solid var(--border);background:var(--panel)}
+.brand{display:flex;align-items:baseline;gap:9px}
+.brand b{font-size:15px;font-weight:600;letter-spacing:-.2px}
+.brand span{color:var(--dim);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.stats{display:flex;gap:18px;margin-left:auto;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:1px}
+.stat b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:10px;color:var(--dim);letter-spacing:.07em;text-transform:uppercase}
+.stat.bad b{color:var(--warn)}
+
+.crumb{display:flex;align-items:center;gap:8px;flex:none;padding:7px 18px;
+  border-bottom:1px solid var(--border);font-size:11.5px;background:var(--bg)}
+.crumb button{font-family:var(--mono);font-size:11.5px;background:none;border:none;
+  color:var(--accent);cursor:pointer;padding:1px 3px;border-radius:3px}
+.crumb button:hover{background:var(--panel-2)}
+.crumb button:disabled{color:var(--fg);cursor:default;font-weight:600}
+.crumb .sep{color:var(--border-2)}
+.crumb .tip{margin-left:auto;color:var(--dim);font-size:10.5px}
+
+.stage{position:relative;flex:1;overflow:hidden;cursor:grab;touch-action:none}
+.stage.pan{cursor:grabbing}
+#svg{width:100%;height:100%;display:block}
+.edge{fill:none;stroke:var(--border-2);stroke-width:1.4;opacity:.55}
+.edge.gap{stroke:var(--warn);stroke-dasharray:4 5;opacity:.5}
+.nd{cursor:pointer}
+.nd circle.body{fill:var(--panel);stroke:var(--border-2);stroke-width:1.4}
+.nd:hover circle.body{stroke:var(--accent)}
+.nd.gap circle.body{fill:none;stroke:var(--warn);stroke-dasharray:5 4}
+.nd.leaf circle.body{stroke-width:1.2}
+.nd text{font-family:var(--mono);paint-order:stroke;stroke:var(--bg);stroke-width:3px;
+  stroke-linejoin:round}
+.nd .cnt{font-size:13px;font-weight:600;fill:var(--fg);text-anchor:middle;
+  dominant-baseline:central;stroke:none}
+.nd .cnt.z{fill:var(--warn);font-size:11px}
+.nd .lbl{font-size:12px;fill:var(--fg);font-weight:600}
+.nd .sub{font-size:10px;fill:var(--dim)}
+.nd.leaf .lbl{font-size:10.5px;font-weight:400;fill:var(--muted)}
+.core circle{fill:var(--panel-2);stroke:var(--accent);stroke-width:1.6}
+.core .t1{font-size:12px;fill:var(--fg);font-weight:600;text-anchor:middle}
+.core .t2{font-size:10px;fill:var(--dim);text-anchor:middle}
+.brk{fill:var(--crit)}
+
+.foot{display:flex;align-items:center;gap:14px;flex:none;flex-wrap:wrap;padding:7px 18px;
+  border-top:1px solid var(--border);background:var(--panel)}
+.lg{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)}
+.sw{width:11px;height:11px;border-radius:2px;flex:none}
+.hint{margin-left:auto;font-size:10.5px;color:var(--dim)}
+
+.insp{position:absolute;right:14px;top:14px;bottom:14px;width:300px;z-index:5;
+  background:var(--panel);border:1px solid var(--border);border-radius:4px;
+  display:flex;flex-direction:column;overflow:hidden}
+.insp[hidden]{display:none}
+.insp header{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;
+  border-bottom:1px solid var(--border)}
+.insp header h3{margin:0;font-size:12.5px;font-weight:600;flex:1;line-height:1.4}
+.insp .x{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;
+  padding:0 2px;line-height:1;font-family:var(--mono)}
+.insp .bd{padding:10px 12px;overflow-y:auto;display:flex;flex-direction:column;gap:11px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:11px}
+.kv dt{color:var(--dim)}
+.kv dd{margin:0;text-align:right;word-break:break-all}
+.row{display:flex;align-items:center;gap:7px;padding:3.5px 0;font-size:11px;
+  border-bottom:1px solid var(--panel-2)}
+.row:last-child{border-bottom:none}
+.row .d{width:6px;height:6px;border-radius:50%;flex:none}
+.row .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.row .v{font-variant-numeric:tabular-nums;color:var(--fg);font-size:10.5px}
+.note{font-size:11px;line-height:1.5;color:var(--muted);padding:8px 10px;
+  border-left:2px solid var(--warn);background:var(--warn-bg)}
+.sect h5{margin:0 0 5px;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--dim);font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div id="app">
+  <div class="hdr">
+    <div class="brand"><b>feedwall</b><span>source map</span></div>
+    <div class="stats">
+      <div class="stat"><b id="s-feeds"></b><span>feeds</span></div>
+      <div class="stat"><b id="s-subj"></b><span>subjects covered</span></div>
+      <div class="stat bad"><b id="s-gap"></b><span>with no sources</span></div>
+      <div class="stat"><b id="s-prim"></b><span>primary</span></div>
+    </div>
+  </div>
+
+  <div class="crumb" id="crumb"></div>
+
+  <div class="stage" id="stage">
+    <svg id="svg"><g id="cam"></g></svg>
+    <aside class="insp" id="insp" hidden>
+      <header><h3 id="i-title"></h3><button class="x" id="i-x" aria-label="Close">&times;</button></header>
+      <div class="bd" id="i-body"></div>
+    </aside>
+  </div>
+
+  <div class="foot">
+    <div class="lg"><i class="sw" style="background:var(--t-primary)"></i>primary</div>
+    <div class="lg"><i class="sw" style="background:var(--t-analysis)"></i>analysis</div>
+    <div class="lg"><i class="sw" style="background:var(--t-wire)"></i>wire</div>
+    <div class="lg"><i class="sw" style="background:var(--t-discussion)"></i>discussion</div>
+    <div class="lg"><svg width="13" height="13" style="flex:none;overflow:visible"><circle cx="6.5" cy="6.5" r="5.5" fill="none" stroke="var(--warn)" stroke-dasharray="4 3"/></svg><span style="white-space:nowrap">coverage gap</span></div>
+    <div class="hint">click a hub to drill in &middot; drag to pan &middot; scroll to zoom</div>
+  </div>
+</div>
+
+<script>
+const DATA=__DATA__;
+const TIERS=['primary','analysis','wire','discussion'];
+const TC=t=>`var(--t-${t})`;
+const $=id=>document.getElementById(id);
+
+let path=[];
+
+function node(){
+  if(path.length===0) return {kind:'root',label:'what is going on in the world',
+    sub:DATA.total+' sources', children:DATA.subjects.map(s=>({
+      id:s.id,label:s.id,count:s.count,kind:'subject',
+      tiers:tierMix(subjFeeds(s)),feeds:subjFeeds(s)}))};
+  const s=DATA.subjects.find(x=>x.id===path[0]);
+  if(path.length===1) return {kind:'subject',label:s.id,sub:s.count+' sources',
+    children:s.groups.map(g=>({id:g.id,label:g.id,count:g.count,kind:'group',
+      tiers:tierMix(g.feeds),feeds:g.feeds}))};
+  const g=s.groups.find(x=>x.id===path[1]);
+  return {kind:'group',label:path[0]+' / '+g.id,sub:g.count+' sources',
+    children:g.feeds.map(f=>({id:f.name,label:f.name,count:f.entries,kind:'feed',feed:f}))};
+}
+const subjFeeds=s=>s.groups.flatMap(g=>g.feeds);
+function tierMix(fs){const m={};for(const f of fs)m[f.tier]=(m[f.tier]||0)+1;return m;}
+
+const P=(r,a)=>[r*Math.cos(a),r*Math.sin(a)];
+const rad=n=>n.kind==='feed'? 5+Math.min(14,Math.sqrt(n.count)*.55)
+                            : 15+Math.min(34,Math.sqrt(n.count)*3.3);
+
+function arcPath(cx,cy,r,a0,a1){
+  const [x0,y0]=P(r,a0),[x1,y1]=P(r,a1);
+  const large=(a1-a0)>Math.PI?1:0;
+  return `M${cx+x0},${cy+y0} A${r},${r} 0 ${large} 1 ${cx+x1},${cy+y1}`;
+}
+
+function render(){
+  const cur=node(), kids=cur.children, n=kids.length;
+  const leaf=cur.kind==='group';
+  const spacing=leaf?34:Math.max(120,2*Math.max(...kids.map(rad))+46);
+  const R=Math.max(leaf?250:250, n*spacing/(2*Math.PI));
+  let out='';
+
+  kids.forEach((k,i)=>{
+    const a=-Math.PI/2 + i*2*Math.PI/n;
+    const [x,y]=P(R,a);
+    const gap=k.count===0;
+    const c1=P(R*.34,a-.30), c2=P(R*.74,a-.11);
+    out+=`<path class="edge${gap?' gap':''}" d="M0,0 C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${x},${y}"/>`;
+  });
+
+  kids.forEach((k,i)=>{
+    const a=-Math.PI/2 + i*2*Math.PI/n;
+    const [x,y]=P(R,a), r=rad(k), gap=k.count===0;
+    let g=`<g class="nd ${gap?'gap ':''}${k.kind==='feed'?'leaf ':''}" data-i="${i}"
+      transform="translate(${x.toFixed(1)},${y.toFixed(1)})">`;
+
+    if(k.kind==='feed'){
+      g+=`<circle class="body" r="${r.toFixed(1)}" style="fill:${TC(k.feed.tier)}"/>`;
+      if(k.feed.broken) g+=`<circle class="brk" cx="${(r*.72).toFixed(1)}" cy="${(-r*.72).toFixed(1)}" r="3"/>`;
+    }else{
+      g+=`<circle class="body" r="${r.toFixed(1)}"/>`;
+      if(!gap){
+        let a0=-Math.PI/2, tot=k.count;
+        for(const t of TIERS){ const v=k.tiers[t]||0; if(!v) continue;
+          const a1=a0+2*Math.PI*v/tot;
+          g+=`<path d="${arcPath(0,0,r+6,a0,a1-.03)}" fill="none" stroke="${TC(t)}" stroke-width="3.2" stroke-linecap="round"/>`;
+          a0=a1; }
+      }
+      g+=`<text class="cnt${gap?' z':''}">${gap?'0':k.count}</text>`;
+    }
+
+    const out_=Math.cos(a)>=0;
+    if(k.kind==='feed'){
+      const deg=a*180/Math.PI, flip=out_?0:180, dx=out_?r+7:-(r+7);
+      g+=`<g transform="rotate(${deg+flip})"><text class="lbl" x="${out_?r+7:-(r+7)}"
+        y="0" text-anchor="${out_?'start':'end'}" dominant-baseline="central">${esc(cut(k.label,26))}</text></g>`;
+    }else{
+      const ly=r+(gap?20:22);
+      g+=`<text class="lbl" x="0" y="${ly}" text-anchor="middle">${esc(k.label)}</text>`;
+      g+=`<text class="sub" x="0" y="${ly+14}" text-anchor="middle">${
+        gap?'no sources':k.count+(k.count===1?' source':' sources')}</text>`;
+    }
+    out+=g+'</g>';
+  });
+
+  out+=`<g class="core"><circle r="${cur.kind==='root'?62:52}"/>
+    <text class="t1" y="-4">${esc(cur.kind==='root'?'the world':cur.label)}</text>
+    <text class="t2" y="12">${esc(cur.sub)}</text></g>`;
+
+  $('cam').innerHTML=out;
+  bindNodes(kids);
+  crumb();
+  fit(R+90);
+}
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const cut=(s,n)=>s.length>n? s.slice(0,n-1).trimEnd()+'\u2026' : s;
+
+function bindNodes(kids){
+  $('cam').querySelectorAll('.nd').forEach(el=>{
+    el.onclick=ev=>{ev.stopPropagation();
+      const k=kids[+el.dataset.i];
+      if(k.kind==='feed') return showFeed(k.feed);
+      if(k.count===0) return showGap(k);
+      path.push(k.id); syncHash(); render(); $('insp').hidden=true;};
+  });
+}
+
+function crumb(){
+  const parts=[['the world',0]];
+  path.forEach((p,i)=>parts.push([p,i+1]));
+  $('crumb').innerHTML=parts.map(([lbl,d],i)=>
+    `<button data-d="${d}" ${i===parts.length-1?'disabled':''}>${esc(lbl)}</button>`
+    +(i<parts.length-1?'<span class="sep">&rsaquo;</span>':'')).join('')
+    +`<span class="tip">${path.length===0?'9 subjects &middot; sized by source count':
+       path.length===1?'click a group to see its feeds':'each dot is one feed'}</span>`;
+  $('crumb').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    path=path.slice(0,+b.dataset.d); syncHash(); render(); $('insp').hidden=true;});
+}
+
+function showFeed(f){
+  $('i-title').textContent=f.name;
+  $('i-body').innerHTML=
+    (f.broken?`<div class="note" style="border-color:var(--crit)">This feed is in an error state &mdash; FreshRSS has not fetched it successfully.</div>`:'')
+    +`<dl class="kv">
+      <dt>subject</dt><dd>${f.subject} / ${f.group}</dd>
+      <dt>tier</dt><dd>${f.tier}</dd>
+      <dt>entries held</dt><dd>${f.entries}</dd>
+      <dt>FreshRSS category</dt><dd>${esc(f.cat)}</dd>
+      <dt>url</dt><dd style="font-size:10px">${esc(f.url)}</dd></dl>`;
+  $('insp').hidden=false;
+}
+function showGap(k){
+  $('i-title').textContent=k.label;
+  $('i-body').innerHTML=`<div class="note">No sources at all. For a system whose goal is
+    &ldquo;what is going on in the world&rdquo;, this is a hole in coverage rather than a
+    quiet subject.</div>`;
+  $('insp').hidden=false;
+}
+$('i-x').onclick=()=>{$('insp').hidden=true;};
+
+let tx=0,ty=0,k=1;
+const cam=$('cam'), stage=$('stage');
+const apply=()=>cam.setAttribute('transform',`translate(${tx},${ty}) scale(${k})`);
+function fit(){
+  const r=stage.getBoundingClientRect();
+  if(!r.width||!r.height){ requestAnimationFrame(fit); return; }
+  cam.setAttribute('transform','translate(0,0) scale(1)');
+  const bb=cam.getBBox();
+  if(!bb.width||!bb.height){ return; }
+  const pad=46;
+  k=Math.min(r.width/(bb.width+pad*2), r.height/(bb.height+pad*2), 1.15);
+  tx=r.width/2-(bb.x+bb.width/2)*k;
+  ty=r.height/2-(bb.y+bb.height/2)*k;
+  apply();
+}
+let drag=null;
+stage.addEventListener('pointerdown',e=>{
+  drag={sx:e.clientX,sy:e.clientY,ox:tx,oy:ty}; stage.classList.add('pan');
+  stage.setPointerCapture(e.pointerId);});
+stage.addEventListener('pointermove',e=>{
+  if(!drag)return; tx=drag.ox+(e.clientX-drag.sx); ty=drag.oy+(e.clientY-drag.sy); apply();});
+stage.addEventListener('pointerup',()=>{drag=null; stage.classList.remove('pan');});
+stage.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const r=stage.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+  const nk=Math.max(.25,Math.min(3,k*(e.deltaY<0?1.11:.9)));
+  tx=mx-(mx-tx)*(nk/k); ty=my-(my-ty)*(nk/k); k=nk; apply();},{passive:false});
+
+const all=DATA.subjects.flatMap(s=>s.groups.flatMap(g=>g.feeds));
+$('s-feeds').textContent=DATA.total;
+$('s-subj').textContent=DATA.subjects.filter(s=>s.count>0).length+' / 9';
+$('s-gap').textContent=DATA.subjects.filter(s=>s.count===0).length;
+$('s-prim').textContent=all.filter(f=>f.tier==='primary').length;
+
+let syncing=false;
+function syncHash(){ syncing=true; location.hash=path.join('/'); syncing=false; }
+function readHash(){
+  const raw=decodeURIComponent(location.hash.replace(/^#/,'')).split('/').filter(Boolean);
+  const next=[];
+  const s=DATA.subjects.find(x=>x.id===raw[0]);
+  if(s){ next.push(s.id);
+    const g=s.groups.find(x=>x.id===raw[1]);
+    if(g) next.push(g.id); }
+  path=next;
+}
+addEventListener('hashchange',()=>{ if(syncing) return; readHash(); render(); $('insp').hidden=true; });
+
+readHash();
+render();
+new ResizeObserver(()=>fit()).observe(stage);
+</script>
