@@ -1,0 +1,10 @@
+[Unit]
+Description=feedwall morning brain run + vault briefing
+# best-effort: needs FreshRSS (:8970), Ollama (:11434), vaultwriter (:8799)
+
+[Service]
+Type=oneshot
+ExecStart=%h/Desktop/code/feedwall/bin/morning.sh
+# gemma4 cold-load under GPU contention can take ~10 min alone
+TimeoutStartSec=3h
+Nice=10
