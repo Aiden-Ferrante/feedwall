@@ -119,7 +119,7 @@ padding:12px}
 const FLEET_APPS = [
   ['shipyard','Shipyard',8845],['mission-control','Control',9090],
   ['vault-dashboard','Vault',8989],['learnhub','Learn',3001],
-  ['feedwall','Feed',8975],
+  ['feedwall','Feed',8975],['content-manager','Content',8955],
 ];
 (() => {
   const nav = document.getElementById('fleetnav');
