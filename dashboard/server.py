@@ -225,9 +225,13 @@ class Handler(BaseHTTPRequestHandler):
                     pass
             freshness = {"briefed": briefed}
             if newest:
-                freshness["scored"] = time.strftime(
-                    "%Y-%m-%dT%H:%M:%S%z", time.localtime(newest)
-                )
+                # isoformat(), not strftime("%z"): %z emits `-0400`, and this
+                # payload's other key (`briefed`) is written elsewhere with
+                # isoformat() and emits `-04:00`. One health body was answering
+                # with two spellings of the same offset — the concrete drift
+                # that motivated the freshness contract check in MC.
+                freshness["scored"] = datetime.datetime.fromtimestamp(
+                    newest).astimezone().isoformat(timespec="seconds")
             # Platform health shape (ok/checks/freshness); items kept for old
             # callers. ok requires a live briefing: a wall that renders while the
             # 06:45 note silently stops arriving is exactly the failure to surface.
@@ -245,7 +249,10 @@ class Handler(BaseHTTPRequestHandler):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--host", default=os.environ.get("FEEDWALL_WALL_HOST", "0.0.0.0"))
+    # Loopback by default: `tailscale serve` fronts this as https on the same
+    # port and needs the tailnet IP free, so a 0.0.0.0 bind here would take the
+    # port out from under it (see fleet-ui/apps.js on the migration).
+    ap.add_argument("--host", default=os.environ.get("FEEDWALL_WALL_HOST", "127.0.0.1"))
     ap.add_argument("--port", type=int,
                     default=int(os.environ.get("FEEDWALL_WALL_PORT", "8975")))
     args = ap.parse_args()
