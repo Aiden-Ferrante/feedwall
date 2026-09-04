@@ -79,7 +79,7 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8">
 font-family:-apple-system,'Segoe UI',Roboto,sans-serif;
 font-size:var(--fleet-text-body);line-height:1.5}
 main{padding:24px;max-width:72rem;margin:0 auto}
-h1{margin:0 0 4px}h1 span{color:var(--accent)}
+h1{margin:0 0 4px}
 .sub{color:var(--muted);font-size:var(--fleet-text-meta);margin-bottom:20px}
 .top{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:8px;
@@ -88,12 +88,12 @@ padding:12px 16px}
 .card a:hover{color:var(--accent)}
 .tldr{color:var(--muted);font-size:var(--fleet-text-meta);margin-top:4px}
 .meta{font-size:var(--fleet-text-meta);color:var(--muted);margin-top:6px}
-.badge{display:inline-block;background:color-mix(in srgb, var(--accent) 20%, transparent);color:var(--accent);font-family:var(--fleet-font-mono);
+.badge{display:inline-block;background:color-mix(in srgb, var(--fg) 10%, transparent);color:var(--fleet-text-dim);font-family:var(--fleet-font-mono);
 border-radius:10px;padding:0 8px;font-weight:700;margin-right:8px}
 .lanes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .lane{background:var(--panel);border:1px solid var(--border);border-radius:8px;
 padding:12px}
-.lane h2{font-size:var(--fleet-text-title);margin:0 0 8px;color:var(--accent)}
+.lane h2{font-size:var(--fleet-text-title);margin:0 0 8px;color:var(--fg)}
 .lane ul{list-style:none;margin:0;padding:0}
 .lane li{padding:6px 0;border-top:1px solid var(--border);font-size:var(--fleet-text-meta)}
 .lane li:first-child{border-top:0}
@@ -104,8 +104,8 @@ padding:12px}
 <header class="fleet-header"><div class="fleet-header-inner">
   <nav class="fleet-apps" aria-label="Fleet" id="fleetnav"><p class="fleet-wordmark">fleet</p></nav>
   <div class="fleet-sections">
-    <h1 class="fleet-brand">feed<span>wall</span></h1>
-    <div class="fleet-actions"><p class="fleet-sub" id="sub">loading…</p></div>
+    <h1 class="fleet-brand">feedwall</h1>
+    <p class="fleet-sub" id="sub">loading…</p>
   </div>
 </div></header>
 <main>
@@ -127,7 +127,7 @@ const FLEET_APPS = [
 ];
 (() => {
   const nav = document.getElementById('fleetnav');
-  const onBox = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  const onBox = /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(location.hostname);
   for (const [id, label, port, blurb, url] of FLEET_APPS) {
     if (id === 'feedwall') {
       const cur = document.createElement('span');
@@ -199,6 +199,23 @@ async function load(){
 load(); setInterval(load, 5*60*1000);
 </script></body></html>"""
 
+FAIL_PAGE = """<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>feedwall — error</title><style>/*FLEET*/
+:root{--bg:var(--fleet-bg);--panel:var(--fleet-surface);--border:var(--fleet-border);
+--fg:var(--fleet-text);--muted:var(--fleet-text-faint)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:var(--fleet-text-body)}
+.fail{max-width:36rem;margin:3rem auto;padding:1rem 1.25rem;background:var(--panel);border:1px solid var(--border);border-radius:8px}
+.fail h2{margin:0 0 .4rem;font-size:var(--fleet-text-title)}
+.fail pre{font-family:var(--fleet-font-mono);font-size:var(--fleet-text-meta);color:var(--muted);white-space:pre-wrap;margin:0}
+.fail a{color:var(--fleet-accent-text)}
+</style></head><body>
+<header class="fleet-header"><div class="fleet-header-inner">
+  <div class="fleet-sections"><h1 class="fleet-brand">feedwall</h1><p class="fleet-sub">could not render</p></div>
+</div></header>
+<main><div class="fail"><h2>The wall could not be read</h2><pre>{msg}</pre>
+<p><a href="/">try again</a></p></div></main></body></html>"""
+
 
 class Handler(BaseHTTPRequestHandler):
     def _send(self, code, body, ctype="application/json"):
@@ -212,8 +229,26 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *_a):
         pass
 
+    def _fail(self, exc, html_page):
+        # One styled failure for both kinds of reader: the page gets a card in
+        # the fleet chrome, an API caller gets JSON. Never http.server's bare
+        # <h1>Error response</h1>.
+        msg = f"{type(exc).__name__}: {exc}"
+        if html_page:
+            body = (FAIL_PAGE.replace("/*FLEET*/", FLEET_CSS)
+                    .replace("{msg}", msg.replace("&", "&amp;").replace("<", "&lt;")))
+            self._send(500, body.encode("utf-8"), "text/html; charset=utf-8")
+        else:
+            self._send(500, {"ok": False, "error": msg})
+
     def do_GET(self):
         path = urllib.parse.urlparse(self.path)
+        try:
+            self._route(path)
+        except Exception as exc:  # noqa: BLE001 — the reader owes a styled answer
+            self._fail(exc, path.path in ("/", "/index.html"))
+
+    def _route(self, path):
         if path.path in ("/", "/index.html"):
             self._send(200, PAGE.replace("/*FLEET*/", FLEET_CSS).encode(),
                        "text/html; charset=utf-8")
