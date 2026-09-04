@@ -117,6 +117,7 @@ padding:12px}
    over the tailnet, where a literal localhost points at the reading machine.
    Keep in step with code/fleet-ui/apps.js; PLATFORM.md Wave 3 retires the copy. */
 const FLEET_APPS = [
+  ['shipyard','Shipyard',8845],['mission-control','Control',9090],
   
   ['learnhub','Learn',3001],
   ['feedwall','Feed',8975],['content-manager','Content',8955],['helm','Helm',8990],
