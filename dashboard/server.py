@@ -241,6 +241,23 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self._send(500, {"ok": False, "error": msg})
 
+    def _font(self, name):
+        # fleet.css is inlined at page root, so its url(fonts/…) resolves here.
+        # Serve fleet-ui/fonts read-only; a basename only, nothing walks up.
+        f = FLEET_CSS_PATH.parent / "fonts" / Path(name).name
+        if not name or Path(name).name != name or not f.is_file():
+            return self._send(404, {"error": "not found"})
+        self.send_response(200)
+        self.send_header("Content-Type", "font/woff2")
+        self.send_header("Cache-Control", "public, max-age=31536000, immutable")
+        data = f.read_bytes()
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        try:
+            self.wfile.write(data)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+
     def do_GET(self):
         path = urllib.parse.urlparse(self.path)
         try:
@@ -249,6 +266,8 @@ class Handler(BaseHTTPRequestHandler):
             self._fail(exc, path.path in ("/", "/index.html"))
 
     def _route(self, path):
+        if path.path.startswith("/fonts/"):
+            return self._font(path.path[len("/fonts/"):])
         if path.path in ("/", "/index.html"):
             self._send(200, PAGE.replace("/*FLEET*/", FLEET_CSS).encode(),
                        "text/html; charset=utf-8")
