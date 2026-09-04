@@ -70,7 +70,8 @@ except OSError:
 
 PAGE = """<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>feedwall</title><style>/*FLEET*/
+<title>feedwall</title><style>
+#sub.stale{color:var(--fleet-warn-text)}/*FLEET*/
 :root{--bg:var(--fleet-bg);--panel:var(--fleet-surface);
 --border:var(--fleet-border);--fg:var(--fleet-text);
 --muted:var(--fleet-text-faint);--accent:var(--fleet-accent);}
@@ -148,15 +149,34 @@ function link(url, text){
   try {
     const u = new URL(url);
     if (u.protocol === 'http:' || u.protocol === 'https:')
-      return `<a href="${esc(u.href)}" target="_blank">${esc(text)}</a>`;
+      return `<a href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>`;
   } catch {}
   return esc(text);
 }
+/* A repeating poll owes: a loading state once, a NON-destructive staleness
+   marker on failure, and never a blank page. lastOk is the data clock; the
+   render clock told you nothing when the poll died. */
+let lastOk = null;
+function markStale(err){
+  const sub = document.getElementById('sub');
+  const since = lastOk ? ' · last good read ' + lastOk.toLocaleTimeString() : '';
+  sub.textContent = 'stale — ' + err + since;
+  sub.classList.add('stale');
+  if (!lastOk) document.getElementById('top').innerHTML =
+    '<div class="quiet">The wall could not be read (' + esc(err) + '). It retries every 5 minutes.</div>';
+}
 async function load(){
-  const d = await (await fetch('/api/wall')).json();
-  document.getElementById('sub').textContent =
-    d.scored + ' items scored in the last ' + d.hours + 'h · ' +
-    new Date().toLocaleString();
+  let d;
+  try {
+    const r = await fetch('/api/wall');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    d = await r.json();
+  } catch (e) { markStale(e.message || String(e)); return; }
+  lastOk = new Date();
+  const sub = document.getElementById('sub');
+  sub.classList.remove('stale');
+  sub.textContent =
+    d.scored + ' items scored in the last ' + d.hours + 'h · read ' + lastOk.toLocaleTimeString();
   const top = document.getElementById('top');
   top.innerHTML = d.top.length ? '' : '<div class="quiet">Nothing cleared the bar — quiet window.</div>';
   for (const it of d.top){
