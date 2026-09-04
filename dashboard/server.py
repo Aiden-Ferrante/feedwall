@@ -41,19 +41,27 @@ def wall_data(hours: int) -> dict:
     # papers stay in their own column; the top strip is for news
     top = [row(r) for r in db.top_since(con, since, 25)
            if r["score"] >= 5.0 and r["lane"] != "papers"][:5]
-    lanes = {}
-    for lane in config.LANES:
+    # Every lane the scorer can WRITE, not only the ones config lists: score.py
+    # files items under "other", and until 2026-09-04 nothing rendered them.
+    lanes, counts = {}, {}
+    quiet = float(getattr(config, "QUIET_SCORE", 6.0))
+    for lane in dict.fromkeys([*config.LANES, *LANE_LABELS]):
         rows = con.execute(
             "SELECT * FROM items WHERE lane=? AND MAX(published, scored_at)>=? "
             "ORDER BY score DESC, published DESC LIMIT 8", (lane, since)
         ).fetchall()
         lanes[lane] = [row(r) for r in rows]
+        n = con.execute(
+            "SELECT COUNT(*) c FROM items WHERE lane=? AND MAX(published, scored_at)>=?",
+            (lane, since)).fetchone()["c"]
+        # quiet = items arrived but none cleared the bar; empty = nothing arrived.
+        counts[lane] = {"n": n, "quiet": bool(rows) and max(r["score"] for r in rows) < quiet}
     scored = con.execute(
         "SELECT COUNT(*) c FROM items WHERE scored_at >= ?", (since,)
     ).fetchone()["c"]
     con.close()
-    return {"top": top, "lanes": lanes, "scored": scored,
-            "labels": LANE_LABELS, "hours": hours}
+    return {"top": top, "lanes": lanes, "counts": counts, "scored": scored,
+            "labels": LANE_LABELS, "hours": hours, "quiet_score": quiet}
 
 
 
@@ -70,47 +78,35 @@ except OSError:
 
 PAGE = """<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>feedwall</title><style>
-#sub.stale{color:var(--fleet-warn-text)}/*FLEET*/
-:root{--bg:var(--fleet-bg);--panel:var(--fleet-surface);
---border:var(--fleet-border);--fg:var(--fleet-text);
---muted:var(--fleet-text-faint);--accent:var(--fleet-accent);}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);
-font-family:-apple-system,'Segoe UI',Roboto,sans-serif;
-font-size:var(--fleet-text-body);line-height:1.5}
-main{padding:24px;max-width:72rem;margin:0 auto}
-h1{margin:0 0 4px}
-.sub{color:var(--muted);font-size:var(--fleet-text-meta);margin-bottom:20px}
-.top{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:8px;
-padding:12px 16px}
-.card a{color:var(--fg);text-decoration:none;font-weight:600}
-.card a:hover{color:var(--accent)}
-.tldr{color:var(--muted);font-size:var(--fleet-text-meta);margin-top:4px}
-.meta{font-size:var(--fleet-text-meta);color:var(--muted);margin-top:6px}
-.badge{display:inline-block;background:color-mix(in srgb, var(--fg) 10%, transparent);color:var(--fleet-text-dim);font-family:var(--fleet-font-mono);
-border-radius:10px;padding:0 8px;font-weight:700;margin-right:8px}
-.lanes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.lane{background:var(--panel);border:1px solid var(--border);border-radius:8px;
-padding:12px}
-.lane h2{font-size:var(--fleet-text-title);margin:0 0 8px;color:var(--fg)}
+<title>feedwall</title><style>/*FLEET*/
+/* Layout only. Every colour, size, face, card, chip and state is fleet.css's. */
+.top{display:flex;flex-direction:column;gap:var(--fleet-space-2);margin-bottom:var(--fleet-space-6)}
+.item{display:grid;grid-template-columns:auto 1fr;gap:var(--fleet-space-2) var(--fleet-space-3);align-items:baseline}
+.item a{color:var(--fleet-text);text-decoration:none;font-weight:600}
+.item a:hover{color:var(--fleet-accent-text)}
+.item .tldr{grid-column:2;color:var(--fleet-text-dim);font-size:var(--fleet-text-meta);margin:0}
+.item .meta{grid-column:2;font-size:var(--fleet-text-micro);color:var(--fleet-text-faint);margin:0}
+.lanes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--fleet-space-3)}
+.lane h2{display:flex;align-items:baseline;gap:var(--fleet-space-2);font-size:var(--fleet-text-title);margin:0 0 var(--fleet-space-2)}
+.lane h2 .fleet-chip{margin-left:auto}
 .lane ul{list-style:none;margin:0;padding:0}
-.lane li{padding:6px 0;border-top:1px solid var(--border);font-size:var(--fleet-text-meta)}
+.lane li{display:grid;grid-template-columns:2.2rem 1fr;gap:0 var(--fleet-space-2);padding:.4rem 0;border-top:1px solid var(--fleet-hairline);font-size:var(--fleet-text-meta)}
 .lane li:first-child{border-top:0}
-.lane a{color:var(--fg);text-decoration:none}.lane a:hover{color:var(--accent)}
-.s{color:var(--muted);font-size:var(--fleet-text-micro);font-family:var(--fleet-font-mono);margin-right:6px}
-.quiet{color:var(--muted);font-style:italic;font-size:var(--fleet-text-meta)}
+.lane li a{color:var(--fleet-text);text-decoration:none}.lane li a:hover{color:var(--fleet-accent-text)}
+.lane li .when{grid-column:2;font-size:var(--fleet-text-micro);color:var(--fleet-text-faint)}
+.lane .fleet-empty{padding:var(--fleet-space-2) var(--fleet-space-3)}
+@media (max-width:420px){.lanes{grid-template-columns:1fr}}
 </style></head><body>
 <header class="fleet-header"><div class="fleet-header-inner">
   <nav class="fleet-apps" aria-label="Fleet" id="fleetnav"><p class="fleet-wordmark">fleet</p></nav>
   <div class="fleet-sections">
     <h1 class="fleet-brand">feedwall</h1>
-    <p class="fleet-sub" id="sub">loading…</p>
+    <p class="fleet-sub" id="sub" aria-live="polite">loading…</p>
   </div>
 </div></header>
-<main>
-<div class="top" id="top"></div>
-<div class="lanes" id="lanes"></div>
+<main class="fleet-main">
+<div class="top" id="top" aria-live="polite"></div>
+<div class="lanes" id="lanes" aria-live="polite"></div>
 </main>
 <script>
 /* Tier one, built client-side because this page is one static string. Ports are
@@ -141,6 +137,8 @@ const FLEET_APPS = [
     }
   }
 })();
+</script>
+<script>
 /* Feed items are third-party internet content: escape every text field, and
    only link URLs that parse as http(s) — anything else renders as plain text. */
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
@@ -153,6 +151,15 @@ function link(url, text){
   } catch {}
   return esc(text);
 }
+/* An age, not a timestamp: the wall is read for what is new. */
+function age(epoch){
+  if (!epoch) return '';
+  const s = Date.now()/1000 - epoch;
+  if (s < 3600) return `${Math.max(1, Math.round(s/60))}m`;
+  if (s < 86400) return `${Math.round(s/3600)}h`;
+  return `${Math.round(s/86400)}d`;
+}
+const score = n => `<span class="fleet-chip mono" title="score">${Number(n).toFixed(0)}</span>`;
 /* A repeating poll owes: a loading state once, a NON-destructive staleness
    marker on failure, and never a blank page. lastOk is the data clock; the
    render clock told you nothing when the poll died. */
@@ -161,9 +168,9 @@ function markStale(err){
   const sub = document.getElementById('sub');
   const since = lastOk ? ' · last good read ' + lastOk.toLocaleTimeString() : '';
   sub.textContent = 'stale — ' + err + since;
-  sub.classList.add('stale');
+  sub.classList.add('fleet-stale');
   if (!lastOk) document.getElementById('top').innerHTML =
-    '<div class="quiet">The wall could not be read (' + esc(err) + '). It retries every 5 minutes.</div>';
+    '<div class="fleet-error"><span class="fleet-chip danger">error</span><span>The wall could not be read</span><span class="t-num">' + esc(err) + '</span><span class="fleet-faint">retries every 5 minutes</span></div>';
 }
 async function load(){
   let d;
@@ -174,26 +181,29 @@ async function load(){
   } catch (e) { markStale(e.message || String(e)); return; }
   lastOk = new Date();
   const sub = document.getElementById('sub');
-  sub.classList.remove('stale');
+  sub.classList.remove('fleet-stale');
   sub.textContent =
     d.scored + ' items scored in the last ' + d.hours + 'h · read ' + lastOk.toLocaleTimeString();
   const top = document.getElementById('top');
-  top.innerHTML = d.top.length ? '' : '<div class="quiet">Nothing cleared the bar — quiet window.</div>';
+  top.innerHTML = d.top.length ? '' : '<div class="fleet-empty">Nothing cleared the bar — quiet window.</div>';
   for (const it of d.top){
     top.insertAdjacentHTML('beforeend',
-      `<div class="card"><span class="badge">${it.score.toFixed(0)}</span>
+      `<div class="fleet-card item">${score(it.score)}
        ${link(it.url, it.title)}
-       <div class="tldr">${esc(it.tldr)}</div>
-       <div class="meta">${esc(d.labels[it.lane]||it.lane)} · ${esc(it.feed)}</div></div>`);
+       <p class="tldr">${esc(it.tldr)}</p>
+       <p class="meta">${esc(d.labels[it.lane]||it.lane)} · ${esc(it.feed)}${it.published ? ' · <span class="t-num">' + age(it.published) + '</span> ago' : ''}</p></div>`);
   }
   const lanes = document.getElementById('lanes'); lanes.innerHTML='';
   for (const [lane, items] of Object.entries(d.lanes)){
+    const c = (d.counts||{})[lane] || {n: items.length, quiet: false};
     const rows = items.length ? items.map(it =>
-      `<li><span class="s">${it.score.toFixed(0)}</span>
-       ${link(it.url, it.title)}</li>`).join('')
-      : '<li class="quiet">quiet</li>';
+      `<li><span class="t-num fleet-faint">${Number(it.score).toFixed(0)}</span>
+       ${link(it.url, it.title)}
+       <span class="when">${esc(it.feed)}${it.published ? ' · <span class="t-num">' + age(it.published) + '</span>' : ''}</span></li>`).join('')
+      : `<li class="fleet-empty">${c.n ? 'quiet — nothing cleared ' + d.quiet_score : 'nothing arrived in ' + d.hours + 'h'}</li>`;
+    const badge = c.n ? `<span class="fleet-chip mono" title="items in the window">${c.n}</span>` : '';
     lanes.insertAdjacentHTML('beforeend',
-      `<div class="lane"><h2>${esc(d.labels[lane])}</h2><ul>${rows}</ul></div>`);
+      `<section class="fleet-card lane" aria-label="${esc(d.labels[lane]||lane)}"><h2>${esc(d.labels[lane]||lane)}${c.quiet ? ' <span class="fleet-chip">quiet</span>' : ''}${badge}</h2><ul>${rows}</ul></section>`);
   }
 }
 load(); setInterval(load, 5*60*1000);
@@ -201,20 +211,46 @@ load(); setInterval(load, 5*60*1000);
 
 FAIL_PAGE = """<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>feedwall — error</title><style>/*FLEET*/
-:root{--bg:var(--fleet-bg);--panel:var(--fleet-surface);--border:var(--fleet-border);
---fg:var(--fleet-text);--muted:var(--fleet-text-faint)}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:var(--fleet-text-body)}
-.fail{max-width:36rem;margin:3rem auto;padding:1rem 1.25rem;background:var(--panel);border:1px solid var(--border);border-radius:8px}
-.fail h2{margin:0 0 .4rem;font-size:var(--fleet-text-title)}
-.fail pre{font-family:var(--fleet-font-mono);font-size:var(--fleet-text-meta);color:var(--muted);white-space:pre-wrap;margin:0}
-.fail a{color:var(--fleet-accent-text)}
-</style></head><body>
+<title>feedwall — error</title><style>/*FLEET*/</style></head><body>
 <header class="fleet-header"><div class="fleet-header-inner">
-  <div class="fleet-sections"><h1 class="fleet-brand">feedwall</h1><p class="fleet-sub">could not render</p></div>
+  <nav class="fleet-apps" aria-label="Fleet" id="fleetnav"><p class="fleet-wordmark">fleet</p></nav>
+  <div class="fleet-sections">
+    <h1 class="fleet-brand">feedwall</h1>
+    <p class="fleet-sub">could not render</p>
+  </div>
 </div></header>
-<main><div class="fail"><h2>The wall could not be read</h2><pre>{msg}</pre>
-<p><a href="/">try again</a></p></div></main></body></html>"""
+<main class="fleet-main"><div class="fleet-error" role="alert"><span class="fleet-chip danger">error</span><span>The wall could not be read</span><span class="t-num">{msg}</span><a class="fleet-btn fleet-btn-sm" href="/" style="margin-left:auto">try again</a></div></main>
+<script>
+/* Tier one, built client-side because this page is one static string. Ports are
+   resolved against whoever is reading — feedwall binds 0.0.0.0 and gets opened
+   over the tailnet, where a literal localhost points at the reading machine.
+   Keep in step with code/fleet-ui/apps.js; PLATFORM.md Wave 3 retires the copy. */
+const FLEET_APPS = [
+  ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
+  ['mission-control','Control',9090,'what is running'],
+  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
+  ['feedwall','Feed',8975,'what the frontier said this week'],
+  ['content-manager','Content',8955,'channels, productions, scripts'],
+  ['helm','Helm',8990,'what needs me now, agenda, decisions'],
+];
+(() => {
+  const nav = document.getElementById('fleetnav');
+  const onBox = /^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(location.hostname);
+  for (const [id, label, port, blurb, url] of FLEET_APPS) {
+    if (id === 'feedwall') {
+      const cur = document.createElement('span');
+      cur.className = 'fleet-app'; cur.setAttribute('aria-current','page');
+      cur.textContent = label; cur.title = blurb; nav.appendChild(cur);
+    } else {
+      const a = document.createElement('a');
+      a.className = 'fleet-app';
+      a.href = (url && !onBox) ? url : `${location.protocol}//${location.hostname}:${port}`;
+      a.textContent = label; a.title = blurb; nav.appendChild(a);
+    }
+  }
+})();
+</script></body></html>"""
+
 
 
 class Handler(BaseHTTPRequestHandler):
