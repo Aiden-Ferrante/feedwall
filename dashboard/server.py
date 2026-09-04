@@ -117,23 +117,26 @@ padding:12px}
    over the tailnet, where a literal localhost points at the reading machine.
    Keep in step with code/fleet-ui/apps.js; PLATFORM.md Wave 3 retires the copy. */
 const FLEET_APPS = [
-  ['shipyard','Shipyard',8845],['mission-control','Control',9090],
-  
-  ['learnhub','Learn',3001],
-  ['feedwall','Feed',8975],['content-manager','Content',8955],['helm','Helm',8990],
+  ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
+  ['mission-control','Control',9090,'what is running'],
+  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
+  ['feedwall','Feed',8975,'what the frontier said this week'],
+  ['content-manager','Content',8955,'channels, productions, scripts'],
+  ['helm','Helm',8990,'what needs me now, agenda, decisions'],
 ];
 (() => {
   const nav = document.getElementById('fleetnav');
-  for (const [id, label, port] of FLEET_APPS) {
+  const onBox = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  for (const [id, label, port, blurb, url] of FLEET_APPS) {
     if (id === 'feedwall') {
       const cur = document.createElement('span');
       cur.className = 'fleet-app'; cur.setAttribute('aria-current','page');
-      cur.textContent = label; nav.appendChild(cur);
+      cur.textContent = label; cur.title = blurb; nav.appendChild(cur);
     } else {
       const a = document.createElement('a');
       a.className = 'fleet-app';
-      a.href = `${location.protocol}//${location.hostname}:${port}`;
-      a.textContent = label; nav.appendChild(a);
+      a.href = (url && !onBox) ? url : `${location.protocol}//${location.hostname}:${port}`;
+      a.textContent = label; a.title = blurb; nav.appendChild(a);
     }
   }
 })();
