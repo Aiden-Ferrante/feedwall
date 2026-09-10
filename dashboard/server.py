@@ -114,12 +114,12 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8">
    over the tailnet, where a literal localhost points at the reading machine.
    Keep in step with code/fleet-ui/apps.js; PLATFORM.md Wave 3 retires the copy. */
 const FLEET_APPS = [
-  ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
-  ['mission-control','Control',9090,'what is running'],
-  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
-  ['feedwall','Feed',8975,'what the frontier said this week'],
-  ['content-manager','Content',8955,'channels, productions, scripts'],
   ['helm','Helm',8990,'what needs me now, agenda, decisions'],
+  ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
+  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
+  ['content-manager','Content',8955,'channels, productions, scripts'],
+  ['feedwall','Feed',8975,'what the frontier said this week'],
+  ['mission-control','Control',9090,'what is running'],
 ];
 (() => {
   const nav = document.getElementById('fleetnav');
@@ -226,12 +226,12 @@ FAIL_PAGE = """<!doctype html><html><head><meta charset="utf-8">
    over the tailnet, where a literal localhost points at the reading machine.
    Keep in step with code/fleet-ui/apps.js; PLATFORM.md Wave 3 retires the copy. */
 const FLEET_APPS = [
-  ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
-  ['mission-control','Control',9090,'what is running'],
-  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
-  ['feedwall','Feed',8975,'what the frontier said this week'],
-  ['content-manager','Content',8955,'channels, productions, scripts'],
   ['helm','Helm',8990,'what needs me now, agenda, decisions'],
+  ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
+  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
+  ['content-manager','Content',8955,'channels, productions, scripts'],
+  ['feedwall','Feed',8975,'what the frontier said this week'],
+  ['mission-control','Control',9090,'what is running'],
 ];
 (() => {
   const nav = document.getElementById('fleetnav');
