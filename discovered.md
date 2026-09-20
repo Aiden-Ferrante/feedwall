@@ -249,3 +249,27 @@ Every URL below was fetched and confirmed to return real XML with entries:
 Standing gap: the leaderboards with the best methodology are the ones without feeds.
 If this lane ever justifies it, the fix is a small scraper posting into FreshRSS —
 not more feed-path guessing.
+
+## 2026-09-20 — research lane added (`research.opml`), and its standing gaps
+
+21 feeds added across four groups: arXiv systems categories (cs.DC / cs.AR / cs.PF),
+serving-stack release atoms, engineering blogs, and individual authors. Every one was
+tested for a parsing XML feed body, not an HTTP 200 — the LMArena trap recorded above
+bites here too (Papers with Code and alphaXiv both return 200 `text/html` for their
+feed paths).
+
+**No usable feed — check these by hand:**
+
+| Source | What happens | Why it matters |
+|---|---|---|
+| **OpenReview** | `api2.openreview.net` returns **403** to an unauthenticated client; `/rss` is 404 | This is the one that hurts. Review threads are the highest-signal content in the field and there is no way to subscribe. |
+| **MLSys proceedings** | `proceedings.mlsys.org` serves HTML only, no feed | The home venue for this lane. |
+| **USENIX conference pages** (OSDI, ATC, NSDI) | per-conference `rss.xml` is 404 — only the site-wide `;login:` feed works, and it is added | Proceedings drop as a batch; a calendar reminder beats a feed. |
+| **ACM SIGOPS / SOSP** | no feed | |
+| **Papers with Code · alphaXiv · Deep Learning Monitor** | 200 `text/html` or 404 | Curation layers; browse, don't subscribe. |
+| **Modal · Baseten · Anyscale · LMSYS · vLLM blog** | 404 on every common feed path; Anyscale returns HTML | Their *release* atoms work and are added instead. |
+
+**The workaround for OpenReview** is a browser bookmark, not a feed: ICLR publishes
+reviews and decisions for **all** submissions including rejected ones, which is what
+makes it the place to read. NeurIPS publishes reviews for accepted papers only; ICML
+publishes neither.

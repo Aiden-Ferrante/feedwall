@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0"><head><title>feedwall research lane — ML systems, inference &amp; efficiency primary sources</title></head><body>
+<outline text="Research — arXiv systems categories">
+  <outline type="rss" text="arXiv cs.DC — distributed &amp; parallel computing" xmlUrl="http://export.arxiv.org/rss/cs.DC" htmlUrl="https://arxiv.org/list/cs.DC/recent"/>
+  <outline type="rss" text="arXiv cs.AR — hardware architecture" xmlUrl="http://export.arxiv.org/rss/cs.AR" htmlUrl="https://arxiv.org/list/cs.AR/recent"/>
+  <outline type="rss" text="arXiv cs.PF — performance" xmlUrl="http://export.arxiv.org/rss/cs.PF" htmlUrl="https://arxiv.org/list/cs.PF/recent"/>
+</outline>
+<outline text="Research — serving stacks (what ships before it publishes)">
+  <outline type="rss" text="vLLM — releases" xmlUrl="https://github.com/vllm-project/vllm/releases.atom" htmlUrl="https://github.com/vllm-project/vllm/releases"/>
+  <outline type="rss" text="SGLang — releases" xmlUrl="https://github.com/sgl-project/sglang/releases.atom" htmlUrl="https://github.com/sgl-project/sglang/releases"/>
+  <outline type="rss" text="llama.cpp — releases" xmlUrl="https://github.com/ggml-org/llama.cpp/releases.atom" htmlUrl="https://github.com/ggml-org/llama.cpp/releases"/>
+  <outline type="rss" text="TensorRT-LLM — releases" xmlUrl="https://github.com/NVIDIA/TensorRT-LLM/releases.atom" htmlUrl="https://github.com/NVIDIA/TensorRT-LLM/releases"/>
+  <outline type="rss" text="PyTorch — releases" xmlUrl="https://github.com/pytorch/pytorch/releases.atom" htmlUrl="https://github.com/pytorch/pytorch/releases"/>
+</outline>
+<outline text="Research — engineering blogs">
+  <outline type="rss" text="PyTorch — blog" xmlUrl="https://pytorch.org/blog/feed.xml" htmlUrl="https://pytorch.org/blog/"/>
+  <outline type="rss" text="NVIDIA — technical blog" xmlUrl="https://developer.nvidia.com/blog/feed" htmlUrl="https://developer.nvidia.com/blog"/>
+  <outline type="rss" text="Hugging Face — blog" xmlUrl="https://huggingface.co/blog/feed.xml" htmlUrl="https://huggingface.co/blog"/>
+  <outline type="rss" text="Together AI — blog" xmlUrl="https://www.together.ai/blog/rss.xml" htmlUrl="https://www.together.ai/blog"/>
+  <outline type="rss" text="Google Research — blog" xmlUrl="https://research.google/blog/rss/" htmlUrl="https://research.google/blog/"/>
+  <outline type="rss" text="USENIX ;login:" xmlUrl="https://www.usenix.org/rss.xml" htmlUrl="https://www.usenix.org/publications/loginonline"/>
+</outline>
+<outline text="Research — people worth reading whole">
+  <outline type="rss" text="Tri Dao (FlashAttention)" xmlUrl="https://tridao.me/feed.xml" htmlUrl="https://tridao.me/"/>
+  <outline type="rss" text="Sebastian Raschka — Ahead of AI" xmlUrl="https://magazine.sebastianraschka.com/feed" htmlUrl="https://magazine.sebastianraschka.com/"/>
+  <outline type="rss" text="Lilian Weng" xmlUrl="https://lilianweng.github.io/index.xml" htmlUrl="https://lilianweng.github.io/"/>
+  <outline type="rss" text="Chip Huyen" xmlUrl="https://huyenchip.com/feed.xml" htmlUrl="https://huyenchip.com/"/>
+  <outline type="rss" text="Eugene Yan" xmlUrl="https://eugeneyan.com/rss/" htmlUrl="https://eugeneyan.com/"/>
+  <outline type="rss" text="Jay Alammar — Language Models" xmlUrl="https://newsletter.languagemodels.co/feed" htmlUrl="https://newsletter.languagemodels.co/"/>
+  <outline type="rss" text="Simon Willison" xmlUrl="https://simonwillison.net/atom/everything/" htmlUrl="https://simonwillison.net/"/>
+</outline>
+</body></opml>
