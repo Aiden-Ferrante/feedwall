@@ -8,3 +8,9 @@ brain-data/
 
 __pycache__/
 *.pyc
+
+# local secrets and virtualenvs
+.env
+.env.*
+!.env.example
+.venv/
