@@ -1,6 +1,25 @@
 # feedwall
 
-A read-only **frontier-awareness system**: wide firehose intake (AI/ML, systems, markets, tech — ~97 curated primary-source feeds) curated by a local LLM to your taste, surfaced as a morning briefing and a glanceable wall. Fully local and keyless. See [PLAN.md](PLAN.md) for the architecture decisions.
+A local, keyless news filter: FreshRSS pulls primary-source feeds (AI/ML, systems, markets, tech), a local LLM (gemma4 via Ollama) scores each item 0-10 for relevance to me, and the top items become a morning briefing and a wall dashboard.
+
+**Result:** 24,178 items scored from 120 distinct feeds (the live subscription list is ~97; pruned feeds keep their rows) between 2026-07-03 and 2026-10-15 (read-only query of `brain-data/curated.sqlite`), and an audit of that store found three failures that every run had reported as success.
+
+## Quickstart
+
+```
+git clone https://github.com/Aiden-Ferrante/feedwall && cd feedwall
+python3 -m briefing.render --stdout   # stdlib only; on a fresh clone prints an empty briefing, "0 items scored"
+python3 -m brain stats                # "items scored: 0" until the brain has run
+```
+
+Scoring for real needs FreshRSS (`docker compose up -d`, then subscribe feeds from the `.opml` files) and Ollama with `gemma4:latest` pulled; then `python3 -m brain run --limit 250 --hours 36`. `brain-data/` is gitignored, so no scored data ships with the repo.
+
+## What went wrong / what I learned
+
+- **Green exit codes hid silent failures.** The three below came from querying the store, not from logs or exit codes; the runs that produced them exited 0.
+- **Fallback scores look like real scores.** When scoring a starred item throws, `brain/__main__.py:62` stores a default score of 7.0. 1,990 rows sit at exactly 7.0, and nothing in a row says which came from the fallback.
+- **A source produced nothing for its whole life.** `brain/stocklake.py` returns 0 on any error ("not an error, just no signal"); the store holds 0 rows with an id like `stocklake/%`, so the cross-feed never landed a single item and never said so.
+- **The cap, not the filter, decided what was read.** `bin/morning.sh:7` runs with `--limit 250`; 91 of the 98 days with any scoring recorded exactly 250 scored rows, so most days the volume cap, not the relevance score, decided what got scored.
 
 ```
 FreshRSS (:8970) ──> brain (gemma4 via Ollama) ──> brain-data/curated.sqlite
