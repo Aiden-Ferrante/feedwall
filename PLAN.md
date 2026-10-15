@@ -87,7 +87,7 @@ feeds in FreshRSS remains the coarse filter; the brain is the fine filter.
 - Discord/X remain manual lurks (no fragile bridges).
 
 ## Open items
-- Change FreshRSS default password (still changeme-feedwall); brain reads API creds
-  from env/file, never hardcoded.
+- ~~Change FreshRSS default password~~ done 2026-10-15: rotated; creds in `.env`
+  (gitignored), brain reads env/.env with no hardcoded default; port bound to 127.0.0.1.
 - Mission Control registration for: feedwall (:8970), feedwall-dashboard (:8975),
   briefing timer (status-only entry).

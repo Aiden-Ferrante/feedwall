@@ -12,7 +12,7 @@ python3 -m briefing.render --stdout   # stdlib only; on a fresh clone prints an 
 python3 -m brain stats                # "items scored: 0" until the brain has run
 ```
 
-Scoring for real needs FreshRSS (`docker compose up -d`, then subscribe feeds from the `.opml` files) and Ollama with `gemma4:latest` pulled; then `python3 -m brain run --limit 250 --hours 36`. `brain-data/` is gitignored, so no scored data ships with the repo.
+Scoring for real needs FreshRSS (`cp .env.example .env`, set both passwords, `docker compose up -d`, then subscribe feeds from the `.opml` files) and Ollama with `gemma4:latest` pulled; then `python3 -m brain run --limit 250 --hours 36`. `brain-data/` is gitignored, so no scored data ships with the repo.
 
 ## What went wrong / what I learned
 
@@ -46,7 +46,7 @@ Read the briefing in Obsidian (or the wall at http://localhost:8975). **Star** w
 
 - Feeds ledger + discovery log: [discovered.md](discovered.md). Starter pack: `starter.opml`.
 - Scoring needs gemma4 warm in Ollama; cold load under GPU contention can take ~6 min (service timeout allows 2h).
-- Login `mooteo` / change the default password (Settings → Profile), then update `FEEDWALL_API_PASS` env for the brain if you change the API password.
+- Credentials: `cp .env.example .env` and set `FRESHRSS_PASSWORD` / `FEEDWALL_API_PASS` before `docker compose up -d` (compose refuses to start without them). Login is `mooteo`. To rotate later: `docker exec feedwall ./cli/update-user.php --user mooteo --password=... --api-password=...`, then update `.env`. FreshRSS listens on 127.0.0.1:8970 only.
 - Timers: `systemctl --user list-timers feedwall-briefing.timer`; logs: `journalctl --user -u feedwall-briefing`.
 - Gaps by design: Discord (GPU MODE) and X/Twitter — lurk in-app. Reddit sometimes 403s FreshRSS's UA.
 - The `benchmarks` lane (`benchmarks.opml`) has a standing gap: **Epoch AI, Artificial Analysis, LMArena and LiveBench publish no usable feed** — check those by hand. Details and the traps (LMArena returns HTTP 200 *HTML* for `/rss`) are in [discovered.md](discovered.md).

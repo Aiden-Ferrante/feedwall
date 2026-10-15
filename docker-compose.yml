@@ -4,7 +4,8 @@ services:
     container_name: feedwall
     restart: unless-stopped
     ports:
-      - "8970:80"
+      # loopback only: FreshRSS is not exposed to the LAN
+      - "127.0.0.1:8970:80"
     volumes:
       - ./data:/var/www/FreshRSS/data
       - ./extensions:/var/www/FreshRSS/extensions
@@ -18,7 +19,9 @@ services:
         --base-url http://localhost:8970
         --default-user mooteo
         --language en
+      # credentials come from .env (gitignored; see .env.example). Only used
+      # when the user is first created; to rotate, use cli/update-user.php.
       FRESHRSS_USER: |-
         --user mooteo
-        --password changeme-feedwall
-        --api-password changeme-feedwall
+        --password ${FRESHRSS_PASSWORD:?set FRESHRSS_PASSWORD in .env}
+        --api-password ${FEEDWALL_API_PASS:?set FEEDWALL_API_PASS in .env}

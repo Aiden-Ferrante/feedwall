@@ -27,7 +27,7 @@ class Client:
 
     def _login(self) -> str:
         qs = urllib.parse.urlencode(
-            {"Email": config.FRESH_USER, "Passwd": config.FRESH_API_PASS}
+            {"Email": config.FRESH_USER, "Passwd": config.require_fresh_api_pass()}
         )
         with urllib.request.urlopen(
             f"{config.FRESH_URL}/accounts/ClientLogin?{qs}", timeout=20

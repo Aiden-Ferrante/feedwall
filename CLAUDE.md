@@ -83,6 +83,6 @@ grow one app into another's tier (helm is the scheduler; shipyard owns the chart
 vaultwriter; `dashboard/server.py` is a zero-dependency page over `/api/wall`. All writes are the
 CLI (`brain run`); the page has none. Health `ok` requires a briefing under 48 h old — the one
 health in the fleet where a stale upstream flips the verdict, on purpose. Keyless: no API key is
-ever assumed. The `FEEDWALL_API_PASS` default is relied on by the brain's unit — do not remove it
-without moving the credential.
+ever assumed. FreshRSS credentials live in `.env` (gitignored; `.env.example` lists the keys) —
+`brain/config.py` loads it and has no default password; FreshRSS binds 127.0.0.1:8970 only.
 <!-- fleet:end -->

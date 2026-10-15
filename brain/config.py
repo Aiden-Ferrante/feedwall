@@ -1,8 +1,9 @@
 """Configuration for the feedwall curation brain.
 
 Everything local and keyless. Values come from environment variables with
-sane defaults for this machine; FEEDWALL_API_PASS is the FreshRSS API
-password (Settings -> Profile -> API management).
+sane defaults for this machine, except FEEDWALL_API_PASS (the FreshRSS API
+password), which has no default: set it in the environment or in the repo's
+.env file (gitignored; see .env.example).
 """
 
 import os
@@ -10,9 +11,36 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+
+def _load_dotenv(path: Path) -> None:
+    """Load KEY=VALUE lines from .env into os.environ (real env wins). Stdlib only."""
+    try:
+        lines = path.read_text().splitlines()
+    except OSError:
+        return
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, val = line.partition("=")
+        os.environ.setdefault(key.strip(), val.strip().strip("'\""))
+
+
+_load_dotenv(ROOT / ".env")
+
 FRESH_URL = os.environ.get("FEEDWALL_FRESH_URL", "http://localhost:8970/api/greader.php")
 FRESH_USER = os.environ.get("FEEDWALL_USER", "mooteo")
-FRESH_API_PASS = os.environ.get("FEEDWALL_API_PASS", "changeme-feedwall")
+FRESH_API_PASS = os.environ.get("FEEDWALL_API_PASS", "")
+
+
+def require_fresh_api_pass() -> str:
+    if not FRESH_API_PASS:
+        raise SystemExit(
+            "FEEDWALL_API_PASS is not set. Put it in the environment or in "
+            f"{ROOT / '.env'} (copy .env.example); it must match the FreshRSS "
+            "API password for user " + FRESH_USER + "."
+        )
+    return FRESH_API_PASS
 
 OLLAMA_URL = os.environ.get("FEEDWALL_OLLAMA_URL", "http://localhost:11434")
 MODEL = os.environ.get("FEEDWALL_MODEL", "gemma4:latest")
