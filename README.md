@@ -2,7 +2,7 @@
 
 A local, keyless news filter: FreshRSS pulls primary-source feeds (AI/ML, systems, markets, tech), a local LLM (gemma4 via Ollama) scores each item 0-10 for relevance to me, and the top items become a morning briefing and a wall dashboard.
 
-**Result:** 24,178 items scored from 120 distinct feeds (the live subscription list is ~97; pruned feeds keep their rows) between 2026-07-03 and 2026-10-15 (read-only query of `brain-data/curated.sqlite`), and an audit of that store found three failures that every run had reported as success.
+**Result:** 24,178 items scored from 120 distinct feeds (more than the ~97 currently subscribed, listed below; feeds come and go over time) between 2026-07-03 and 2026-10-15 (read-only query of `brain-data/curated.sqlite`), and an audit of that store found three failures that every run had reported as success.
 
 ## Quickstart
 
