@@ -1,10 +1,13 @@
 [Unit]
-Description=feedwall morning brain run + vault briefing
-# best-effort: needs FreshRSS (:8970), Ollama (:11434), vaultwriter (:8799)
+Description=feedwall morning brain run + briefing
+# best-effort: needs FreshRSS (:8970), Ollama (:11434), the briefing sink (FEEDWALL_VAULTWRITER_URL, default :8799)
 
 [Service]
 Type=oneshot
-ExecStart=%h/Desktop/code/feedwall/bin/morning.sh
+# Checkout location. `make install-unit` writes a drop-in that sets this to the
+# real checkout; the default only applies if the unit is installed by hand.
+Environment=FEEDWALL_DIR=%h/feedwall
+ExecStart=/bin/bash -c 'exec "$${FEEDWALL_DIR}/bin/morning.sh"'
 # gemma4 cold-load under GPU contention can take ~10 min alone
 TimeoutStartSec=3h
 Nice=10

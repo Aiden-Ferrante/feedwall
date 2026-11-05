@@ -70,7 +70,12 @@ def wall_data(hours: int) -> dict:
 # else — an admin page that will not render because a stylesheet moved is worse
 # than one that renders in its own colours.
 FLEET_CSS_PATH = Path(
-    os.environ.get("FLEET_UI_CSS", Path.home() / "Desktop/code/fleet-ui/fleet.css"))
+    os.environ.get("FLEET_UI_CSS", Path(__file__).resolve().parent.parent.parent
+                   / "fleet-ui" / "fleet.css"))
+
+# Optional public URL for the Learn tab in the nav (e.g. a reverse-proxied
+# hostname). Empty means "same host, port 3001", like every other tab.
+LEARN_PUBLIC_URL = os.environ.get("FEEDWALL_LEARN_PUBLIC_URL", "")
 try:
     FLEET_CSS = FLEET_CSS_PATH.read_text(encoding="utf-8")
 except OSError:
@@ -116,7 +121,7 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8">
 const FLEET_APPS = [
   ['helm','Helm',8990,'what needs me now, agenda, decisions'],
   ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
-  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
+  ['learnhub','Learn',3001,'courses, study queue, uploads',/*LEARN_PUBLIC_URL*/],
   ['content-manager','Content',8955,'channels, productions, scripts'],
   ['feedwall','Feed',8975,'what the frontier said this week'],
   ['mission-control','Control',9090,'what is running'],
@@ -228,7 +233,7 @@ FAIL_PAGE = """<!doctype html><html><head><meta charset="utf-8">
 const FLEET_APPS = [
   ['helm','Helm',8990,'what needs me now, agenda, decisions'],
   ['shipyard','Shipyard',8845,'projects, goals, what the fleet owes'],
-  ['learnhub','Learn',3001,'courses, study queue, uploads','https://spark-9415.tailff006f.ts.net'],
+  ['learnhub','Learn',3001,'courses, study queue, uploads',/*LEARN_PUBLIC_URL*/],
   ['content-manager','Content',8955,'channels, productions, scripts'],
   ['feedwall','Feed',8975,'what the frontier said this week'],
   ['mission-control','Control',9090,'what is running'],
@@ -253,6 +258,15 @@ const FLEET_APPS = [
 
 
 
+def _inject(page: str) -> str:
+    return (page.replace("/*FLEET*/", FLEET_CSS)
+            .replace("/*LEARN_PUBLIC_URL*/", json.dumps(LEARN_PUBLIC_URL)))
+
+
+def _page() -> str:
+    return _inject(PAGE)
+
+
 class Handler(BaseHTTPRequestHandler):
     def _send(self, code, body, ctype="application/json"):
         data = body if isinstance(body, bytes) else json.dumps(body).encode()
@@ -271,7 +285,7 @@ class Handler(BaseHTTPRequestHandler):
         # <h1>Error response</h1>.
         msg = f"{type(exc).__name__}: {exc}"
         if html_page:
-            body = (FAIL_PAGE.replace("/*FLEET*/", FLEET_CSS)
+            body = (_inject(FAIL_PAGE)
                     .replace("{msg}", msg.replace("&", "&amp;").replace("<", "&lt;")))
             self._send(500, body.encode("utf-8"), "text/html; charset=utf-8")
         else:
@@ -305,7 +319,7 @@ class Handler(BaseHTTPRequestHandler):
         if path.path.startswith("/fonts/"):
             return self._font(path.path[len("/fonts/"):])
         if path.path in ("/", "/index.html"):
-            self._send(200, PAGE.replace("/*FLEET*/", FLEET_CSS).encode(),
+            self._send(200, _page().encode(),
                        "text/html; charset=utf-8")
         elif path.path == "/api/wall":
             hours = int(dict(urllib.parse.parse_qsl(path.query)).get("hours", 24))

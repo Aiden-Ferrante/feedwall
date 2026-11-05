@@ -1,5 +1,8 @@
 """Map feedwall's FreshRSS feeds onto the 9-subject tree + tier facet."""
-import html, json, subprocess
+import html, json, os, subprocess
+
+# FreshRSS user whose SQLite DB is read (same variable as docker-compose / brain).
+FRESH_USER = os.environ.get("FEEDWALL_USER", "feedwall")
 
 SUBJECTS = ["economy","markets","politics","geopolitics","technology",
             "science","society","energy","business"]
@@ -78,7 +81,7 @@ OVERRIDE = [
 ]
 
 rows = json.loads(subprocess.run(["docker","exec","feedwall","php","-r","""
-$db=new PDO("sqlite:/var/www/FreshRSS/data/users/mooteo/db.sqlite");
+$db=new PDO("sqlite:/var/www/FreshRSS/data/users/""" + FRESH_USER + """/db.sqlite");
 $o=[]; foreach($db->query("select c.name cat, f.name, f.url, f.cache_nbEntries n,
  f.error, f.lastUpdate from feed f join category c on c.id=f.category") as $r)
  $o[]=["cat"=>$r["cat"],"name"=>$r["name"],"url"=>$r["url"],

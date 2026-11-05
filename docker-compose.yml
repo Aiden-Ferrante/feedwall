@@ -10,18 +10,18 @@ services:
       - ./data:/var/www/FreshRSS/data
       - ./extensions:/var/www/FreshRSS/extensions
     environment:
-      TZ: America/New_York
+      TZ: ${FEEDWALL_TZ:-UTC}
       # refresh all feeds every 20 min (in-container cron)
       CRON_MIN: '*/20'
       # one-shot auto-provision so there's no web wizard on first boot
       FRESHRSS_INSTALL: |-
         --api-enabled
         --base-url http://localhost:8970
-        --default-user mooteo
+        --default-user ${FEEDWALL_USER:-feedwall}
         --language en
       # credentials come from .env (gitignored; see .env.example). Only used
       # when the user is first created; to rotate, use cli/update-user.php.
       FRESHRSS_USER: |-
-        --user mooteo
+        --user ${FEEDWALL_USER:-feedwall}
         --password ${FRESHRSS_PASSWORD:?set FRESHRSS_PASSWORD in .env}
         --api-password ${FEEDWALL_API_PASS:?set FEEDWALL_API_PASS in .env}

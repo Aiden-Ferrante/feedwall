@@ -1,4 +1,4 @@
-"""CLI: python -m brain run|stats  (run from ~/Desktop/code/feedwall)."""
+"""CLI: python -m brain run|stats  (run from the repo root)."""
 
 import argparse
 import re

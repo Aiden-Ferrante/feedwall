@@ -1,7 +1,7 @@
 """Configuration for the feedwall curation brain.
 
 Everything local and keyless. Values come from environment variables with
-sane defaults for this machine, except FEEDWALL_API_PASS (the FreshRSS API
+neutral local defaults, except FEEDWALL_API_PASS (the FreshRSS API
 password), which has no default: set it in the environment or in the repo's
 .env file (gitignored; see .env.example).
 """
@@ -29,7 +29,7 @@ def _load_dotenv(path: Path) -> None:
 _load_dotenv(ROOT / ".env")
 
 FRESH_URL = os.environ.get("FEEDWALL_FRESH_URL", "http://localhost:8970/api/greader.php")
-FRESH_USER = os.environ.get("FEEDWALL_USER", "mooteo")
+FRESH_USER = os.environ.get("FEEDWALL_USER", "feedwall")
 FRESH_API_PASS = os.environ.get("FEEDWALL_API_PASS", "")
 
 

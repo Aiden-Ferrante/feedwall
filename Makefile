@@ -31,7 +31,14 @@ install-unit:
 	  ln -sfn "$(CURDIR)/deploy/$$u" "$(UNIT_DIR)/$$u"; \
 	  echo "linked $(UNIT_DIR)/$$u -> $(CURDIR)/deploy/$$u"; \
 	done
+	@mkdir -p "$(UNIT_DIR)/feedwall-briefing.service.d"
+	@printf '[Service]\nEnvironment=FEEDWALL_DIR=%s\n' "$(CURDIR)" \
+	  > "$(UNIT_DIR)/feedwall-briefing.service.d/checkout.conf"
+	@echo "pointed feedwall-briefing.service at $(CURDIR)"
 	systemctl --user daemon-reload
 	systemctl --user enable --now feedwall-briefing.timer
 
-.PHONY: check install-unit
+test:
+	python3 -m pytest -q
+
+.PHONY: check install-unit test
