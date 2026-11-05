@@ -28,6 +28,14 @@ LANE_LABELS = {
 QUIET_SCORE = 6.0  # below this, a lane had no genuinely notable item
 
 
+def _score_tag(r) -> str:
+    """`7/10`, or `7/10 fallback` when the model never scored the item."""
+    tag = f"{r['score']:.0f}/10"
+    if r["score_source"] == "fallback":
+        tag += " fallback"
+    return tag
+
+
 def _course_short_title(raw: str) -> str:
     """Human title from Learn-hub archive-style names ("Title -- Author -- … -- Anna's
     Archive") — first segment, '_ ' unsanitized back to ': ' (mirrors the hub's own cleaner)."""
@@ -89,7 +97,7 @@ def build(hours: int) -> str:
         for r in top:
             lines.append(
                 f"1. **[{r['title']}]({r['url']})** — {r['tldr']} "
-                f"`{r['score']:.0f}/10 · {LANE_LABELS.get(r['lane'], r['lane'])} · {r['feed']}`"
+                f"`{_score_tag(r)} · {LANE_LABELS.get(r['lane'], r['lane'])} · {r['feed']}`"
             )
     else:
         lines.append("*Nothing cleared the bar today — genuinely quiet.*")
@@ -98,7 +106,7 @@ def build(hours: int) -> str:
         lines += ["", "## Papers", ""]
         for r in papers:
             lines.append(
-                f"1. **[{r['title']}]({r['url']})** — {r['tldr']} `{r['score']:.0f}/10`"
+                f"1. **[{r['title']}]({r['url']})** — {r['tldr']} `{_score_tag(r)}`"
             )
     lines += ["", "## Lanes", ""]
     top_ids = {r["id"] for r in top}

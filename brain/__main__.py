@@ -7,6 +7,26 @@ import time
 
 from . import config, db, freshrss, score, stocklake
 
+FALLBACK_SCORE = 7.0  # stored for a starred item the model failed to score
+
+
+def skip_reason(item: dict):
+    """Deterministic pre-filter: why an item never reaches the scorer, or None.
+
+    Runs before any model call, so feed noise costs nothing and can't be
+    mis-scored. Rules live in config (TITLE_SKIP_*, URL_SKIP_RE).
+    """
+    title = (item.get("title") or "").strip()
+    if not title:
+        return "no title"
+    if title.lower().startswith(config.TITLE_SKIP_PREFIXES):
+        return "ci/nightly tag"
+    if re.match(config.TITLE_SKIP_RE, title):
+        return "build-number release"
+    if re.match(config.URL_SKIP_RE, item.get("url") or ""):
+        return "translated duplicate"
+    return None
+
 
 def cmd_run(args):
     con = db.connect()
@@ -22,13 +42,7 @@ def cmd_run(args):
     fetched = scored = papers_scored = 0
     for item in client.unread(newer_than_unix=since, max_items=args.limit * 3):
         fetched += 1
-        if item["id"] in known or not item["title"]:
-            continue
-        if item["title"].lower().startswith(config.TITLE_SKIP_PREFIXES):
-            continue
-        if re.match(config.TITLE_SKIP_RE, item["title"].strip()):
-            continue
-        if re.match(config.URL_SKIP_RE, item["url"]):
+        if item["id"] in known or skip_reason(item):
             continue
         if scored >= args.limit:
             break
@@ -52,19 +66,27 @@ def cmd_run(args):
             print(f"  scored {scored}...")
 
     # sync stars (taste signal)
-    starred_ids = 0
+    starred_ids = fallbacks = 0
     for item in client.starred():
         if item["id"] not in known:
             is_paper = item["category"] == config.PAPERS_CATEGORY
+            source = "model"
             try:
                 verdict = score.score_item(item, papers_prompt if is_paper else system_prompt)
-            except Exception:
-                verdict = {"lane": "other", "score": 7.0, "tldr": ""}
+            except Exception as e:
+                # A starred item must still be stored (it is a taste signal),
+                # so it gets a default score, labelled as such.
+                print(f"  ! scoring failed for starred {item['title'][:60]}: {e}; "
+                      f"storing fallback score {FALLBACK_SCORE}", file=sys.stderr)
+                verdict = {"lane": "other", "score": FALLBACK_SCORE, "tldr": ""}
+                source = "fallback"
+                fallbacks += 1
             if is_paper:
                 verdict["lane"] = "papers"
             elif item["category"] == config.BENCHMARKS_CATEGORY:
                 verdict["lane"] = "benchmarks"
-            db.upsert_item(con, item, verdict["lane"], verdict["score"], verdict["tldr"])
+            db.upsert_item(con, item, verdict["lane"], verdict["score"], verdict["tldr"],
+                           score_source=source)
         db.mark_starred(con, item["id"])
         starred_ids += 1
 
@@ -73,7 +95,8 @@ def cmd_run(args):
     db.set_meta(con, "last_run", str(int(time.time())))
     con.commit()
     print(f"run complete: {fetched} fetched, {scored} newly scored, "
-          f"{starred_ids} starred synced, {lake} lake signals -> {config.DB_PATH}")
+          f"{starred_ids} starred synced ({fallbacks} fallback scores), "
+          f"{lake} lake signals -> {config.DB_PATH}")
 
 
 def cmd_stats(args):
@@ -85,6 +108,12 @@ def cmd_stats(args):
         "GROUP BY lane ORDER BY c DESC"
     ):
         print(f"  {row['lane']:<12} {row['c']:>5}  avg {row['avg']}")
+    print("by score source:")
+    for row in con.execute(
+        "SELECT COALESCE(score_source, 'unknown') src, COUNT(*) c FROM items "
+        "GROUP BY src ORDER BY c DESC"
+    ):
+        print(f"  {row['src']:<12} {row['c']:>5}")
     print("\ntop 10 (last 48h):")
     for r in db.top_since(con, int(time.time()) - 48 * 3600, 10):
         print(f"  [{r['score']:.1f}] ({r['lane']}) {r['title'][:80]}")

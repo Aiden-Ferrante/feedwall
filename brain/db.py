@@ -18,12 +18,34 @@ CREATE TABLE IF NOT EXISTS items (
     score     REAL,
     tldr      TEXT,
     starred   INTEGER DEFAULT 0,
-    scored_at INTEGER
+    scored_at INTEGER,
+    score_source TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_items_pub ON items(published);
 CREATE INDEX IF NOT EXISTS idx_items_score ON items(score);
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT);
 """
+
+# Where a row's score came from. NULL means the row was written before this
+# column existed and its origin is unknown; it is never guessed.
+SCORE_SOURCES = ("model", "fallback", "lake")
+
+
+def migrate(con: sqlite3.Connection) -> None:
+    """Add score_source to a DB created before it existed. Idempotent.
+
+    Only rows whose origin is provable are backfilled: stocklake rows carry a
+    `stocklake/` id prefix, so they are labelled `lake`. Every other legacy row
+    stays NULL, because a model score and a fallback 7.0 are indistinguishable
+    after the fact.
+    """
+    cols = {r[1] for r in con.execute("PRAGMA table_info(items)")}
+    if "score_source" in cols:
+        return
+    with con:
+        con.execute("ALTER TABLE items ADD COLUMN score_source TEXT")
+        con.execute("UPDATE items SET score_source='lake' "
+                    "WHERE id LIKE 'stocklake/%' AND score_source IS NULL")
 
 
 def connect() -> sqlite3.Connection:
@@ -31,6 +53,7 @@ def connect() -> sqlite3.Connection:
     con = sqlite3.connect(config.DB_PATH)
     con.row_factory = sqlite3.Row
     con.executescript(SCHEMA)
+    migrate(con)
     return con
 
 
@@ -38,16 +61,20 @@ def known_ids(con) -> set:
     return {r["id"] for r in con.execute("SELECT id FROM items")}
 
 
-def upsert_item(con, item: dict, lane: str, score: float, tldr: str):
+def upsert_item(con, item: dict, lane: str, score: float, tldr: str,
+                score_source: str = "model"):
+    if score_source not in SCORE_SOURCES:
+        raise ValueError(f"score_source must be one of {SCORE_SOURCES}, got {score_source!r}")
     con.execute(
         """INSERT INTO items (id, feed, category, title, url, published, snippet,
-                              lane, score, tldr, scored_at)
+                              lane, score, tldr, scored_at, score_source)
            VALUES (:id, :feed, :category, :title, :url, :published, :snippet,
-                   :lane, :score, :tldr, :scored_at)
+                   :lane, :score, :tldr, :scored_at, :score_source)
            ON CONFLICT(id) DO UPDATE SET lane=:lane, score=:score, tldr=:tldr,
-                                         scored_at=:scored_at""",
+                                         scored_at=:scored_at,
+                                         score_source=:score_source""",
         {**item, "lane": lane, "score": score, "tldr": tldr,
-         "scored_at": int(time.time())},
+         "scored_at": int(time.time()), "score_source": score_source},
     )
 
 

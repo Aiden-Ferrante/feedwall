@@ -36,7 +36,7 @@ def wall_data(hours: int) -> dict:
     row = lambda r: {  # noqa: E731
         "title": r["title"], "url": r["url"], "tldr": r["tldr"],
         "score": r["score"], "lane": r["lane"], "feed": r["feed"],
-        "published": r["published"],
+        "published": r["published"], "score_source": r["score_source"],
     }
     # papers stay in their own column; the top strip is for news
     top = [row(r) for r in db.top_since(con, since, 25)
