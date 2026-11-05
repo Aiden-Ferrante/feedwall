@@ -99,27 +99,32 @@ def set_meta(con, key: str, value: str):
 # publisher". arXiv feed items carry submission timestamps that lag their
 # public announcement by 1-3 days, so filtering on published alone would
 # silently drop freshly-announced papers from the daily window.
-def top_since(con, since_unix: int, limit: int = 50):
+# `until` (exclusive upper bound, default: no bound) lets a briefing be
+# replayed for a past date, e.g. against the committed demo DB.
+_NO_BOUND = 9223372036854775807
+
+
+def top_since(con, since_unix: int, limit: int = 50, until: int | None = None):
     return con.execute(
-        "SELECT * FROM items WHERE MAX(published, scored_at) >= ? "
+        "SELECT * FROM items WHERE MAX(published, scored_at) BETWEEN ? AND ? "
         "ORDER BY score DESC, published DESC LIMIT ?",
-        (since_unix, limit),
+        (since_unix, until or _NO_BOUND, limit),
     ).fetchall()
 
 
-def lane_best_since(con, lane: str, since_unix: int):
+def lane_best_since(con, lane: str, since_unix: int, until: int | None = None):
     return con.execute(
-        "SELECT * FROM items WHERE lane = ? AND MAX(published, scored_at) >= ? "
+        "SELECT * FROM items WHERE lane = ? AND MAX(published, scored_at) BETWEEN ? AND ? "
         "ORDER BY score DESC LIMIT 1",
-        (lane, since_unix),
+        (lane, since_unix, until or _NO_BOUND),
     ).fetchone()
 
 
-def lane_top_since(con, lane: str, since_unix: int, limit: int):
+def lane_top_since(con, lane: str, since_unix: int, limit: int, until: int | None = None):
     return con.execute(
-        "SELECT * FROM items WHERE lane = ? AND MAX(published, scored_at) >= ? "
+        "SELECT * FROM items WHERE lane = ? AND MAX(published, scored_at) BETWEEN ? AND ? "
         "AND score >= 6.0 ORDER BY score DESC LIMIT ?",
-        (lane, since_unix, limit),
+        (lane, since_unix, until or _NO_BOUND, limit),
     ).fetchall()
 
 
