@@ -49,8 +49,12 @@ DB_PATH = Path(os.environ.get("FEEDWALL_DB", ROOT / "brain-data" / "curated.sqli
 
 VAULTWRITER_URL = os.environ.get("FEEDWALL_VAULTWRITER_URL", "http://localhost:8799")
 
-# Learn hub (txt2kg learn service) — source of the briefing's "Study debt" section.
+# Optional "Study debt" section: pulls spaced-repetition review counts from a
+# separate study service the author runs (GET {LEARN_URL}/api/study-debt).
+# Off by default; set FEEDWALL_STUDY_DEBT=1 to enable.
+STUDY_DEBT_ENABLED = os.environ.get("FEEDWALL_STUDY_DEBT", "").lower() in ("1", "true", "yes")
 LEARN_URL = os.environ.get("FEEDWALL_LEARN_URL", "http://localhost:8010")
+LEARN_UI_URL = os.environ.get("FEEDWALL_LEARN_UI_URL", "http://localhost:3001")
 
 LANES = ["papers", "benchmarks", "ai-ml", "systems", "markets", "causal-stats",
          "data-eng", "tech"]

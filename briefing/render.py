@@ -40,7 +40,10 @@ def _course_short_title(raw: str) -> str:
 def study_debt_lines() -> list[str]:
     """The Learn hub's review debt as briefing lines — the daily surface is what turns
     spaced repetition from a feature into a habit. Silently absent when the hub is down
-    or nothing is tracked (mirrors the stocklake bridge: never break the briefing)."""
+    or nothing is tracked (mirrors the stocklake bridge: never break the briefing).
+    Opt-in: returns nothing unless FEEDWALL_STUDY_DEBT is set."""
+    if not config.STUDY_DEBT_ENABLED:
+        return []
     try:
         with urllib.request.urlopen(f"{config.LEARN_URL}/api/study-debt", timeout=10) as r:
             debt = json.loads(r.read().decode())
@@ -62,7 +65,7 @@ def study_debt_lines() -> list[str]:
         lines.append(
             f"- **{due} concept{'s' if due != 1 else ''} due now**"
             + (f" ({per_course})" if per_course else "")
-            + " — [study](http://localhost:3001)"
+            + f" — [study]({config.LEARN_UI_URL})"
         )
     if soon:
         lines.append(f"- {soon} more fade over the next {int(debt.get('days') or 7)} days.")
